@@ -1,18 +1,80 @@
 <!DOCTYPE html>
-<html>
-<head>
-<title>JOKER MARKET</title>
-</head>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JOKER MARKET - Shop Smart, Live Better</title>
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}body{margin:0;background:#fff5ef;color:#222}
+header{background:#ff6a00;color:#fff;padding:12px 14px;position:sticky;top:0;z-index:10}
+.top{display:flex;align-items:center;gap:10px}.logo{font-size:22px;font-weight:900}.logo span{color:#111;background:#fff;padding:2px 6px;border-radius:6px}
+.search{flex:1;background:#fff;border-radius:20px;display:flex;overflow:hidden}.search input{flex:1;border:0;padding:10px;outline:0}.search button{background:#111;color:#fff;border:0;padding:0 14px}
+.icons{display:flex;gap:12px;font-size:20px;cursor:pointer}.icons b{font-size:12px;background:#111;color:#fff;border-radius:50%;padding:2px 6px;vertical-align:top}
+.nav{display:flex;gap:10px;overflow:auto;padding:8px 0}.nav button{white-space:nowrap;border:0;background:#fff;color:#ff6a00;padding:7px 14px;border-radius:20px;font-weight:700;cursor:pointer}.nav button.on{background:#111;color:#fff}
+.banner{background:linear-gradient(90deg,#ff6a00,#ff9a3d);color:#fff;margin:12px;border-radius:16px;padding:18px}.banner h1{margin:0;font-size:28px}.banner button{background:#fff;color:#ff6a00;border:0;padding:10px 18px;border-radius:20px;font-weight:800}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{background:#fff;border:1px solid #ffe0cc;border-radius:14px;overflow:hidden}.card img{width:100%;height:150px;object-fit:cover}.card .p{padding:10px}.price{color:#ff6a00;font-weight:900;font-size:18px}.old{text-decoration:line-through;color:#999;font-size:13px}.card button{width:100%;margin-top:6px;padding:9px;border-radius:8px;border:0;cursor:pointer}.add{background:#ff6a00;color:#fff;font-weight:800}.wish{background:#fff3e8}
+section{padding:0 12px}.filters{display:flex;gap:8px;padding:0 12px;flex-wrap:wrap}.filters input,.filters select{padding:9px;border:1px solid #ddd;border-radius:10px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-end;justify-content:center}.modal.open{display:flex}.box{background:#fff;width:100%;max-width:520px;max-height:90vh;overflow:auto;border-radius:18px 18px 0 0;padding:18px}
+input,select,textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd;border-radius:10px}.btn{background:#ff6a00;color:#fff;border:0;padding:12px;border-radius:10px;width:100%;font-weight:800;margin-top:8px}.btn2{background:#111;color:#fff}
+.badge{background:#ffe8d6;color:#ff6a00;padding:3px 8px;border-radius:20px;font-size:12px;font-weight:700}
+footer{text-align:center;padding:20px;color:#888;font-size:13px}
+</style></head>
 <body>
-<h1>JOKER MARKET</h1>
-<p>Welcome to JOKER MARKET - your online market for buying and selling.</p>
-<h2>What we do</h2>
-<ul>
-<li>Sell quality products</li>
-<li>Fast delivery</li>
-<li>Trusted sellers</li>
-<li>Good customer service</li>
-</ul>
-<p>Order on WhatsApp: 090-XXX-XXX-XXXX</p>
-</body>
-</html>
+<header><div class="top"><div class="logo">🃏 JOKER <span>MARKET</span></div>
+<div class="search"><input id="q" placeholder="Search JOKER MARKET..."><button onclick="doSearch()">Search</button></div>
+<div class="icons"><span onclick="openModal('wishModal')">❤️<b id="wishCount">0</b></span><span onclick="openModal('cartModal')">🛒<b id="cartCount">0</b></span><span onclick="openModal('authModal')">👤</span><span onclick="openModal('adminModal')">⚙️</span></div></div>
+<div class="nav" id="cats"></div></header>
+
+<div class="banner"><span class="badge" style="background:#fff">MEGA SALE • UP TO 70% OFF</span><h1>Welcome to<br>JOKER MARKET 🃏</h1><p>Free delivery on orders over ₦20,000 • Use code <b>JOKER10</b></p><button onclick="filterCat('All')">Shop Trending Now →</button></div>
+
+<section><h2>🔥 Trending Today <span style="float:right;font-size:13px;color:#ff6a00;cursor:pointer" onclick="openModal('trackModal')">Track Order →</span></h2></section>
+<div class="filters"><select id="catFilter" onchange="render()"><option>All</option><option>Electronics</option><option>Fashion</option><option>Shoes</option><option>Gadgets</option><option>Beauty</option><option>Accessories</option></select><select id="sort" onchange="render()"><option value="pop">Most Popular</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select><input id="maxPrice" type="number" placeholder="Max Price ₦" onchange="render()"></div>
+<div class="grid" id="grid"></div>
+<section><h2>⭐ Customer Reviews</h2><p>⭐⭐⭐⭐⭐ <b>4.8/5</b> - 12,400+ happy customers in Lagos, Abuja & Port Harcourt</p><p>"Delivery came in 2 days! Original product." - Ada, Lagos</p><p>"JOKER MARKET is now my number 1 shop." - Tunde, Abuja</p><p>Need help? WhatsApp Support: <b>090-XXX-XXX-XXXX</b> • support@jokermarket.ng • Refer a friend & earn ₦500!</p></section>
+<footer>© 2026 JOKER MARKET • Secure Payments • Easy Returns • Made for Nigeria 🇳🇬</footer>
+
+<div class="modal" id="cartModal"><div class="box"><h2>Your Cart</h2><div id="cartItems"></div><input id="coupon" placeholder="Coupon - try JOKER10"><button class="btn" onclick="applyCoupon()">Apply Coupon</button><h3 id="total">Total: ₦0</h3><select id="pay"><option>Pay on Delivery</option><option>Card Payment</option><option>Bank Transfer</option><option>Paystack / Flutterwave</option></select><button class="btn btn2" onclick="checkout()">Secure Checkout →</button><button class="btn" style="background:#ddd;color:#111" onclick="closeModals()">Close</button></div></div>
+<div class="modal" id="wishModal"><div class="box"><h2>❤️ Wishlist</h2><div id="wishItems"></div><button class="btn" style="background:#ddd;color:#111" onclick="closeModals()">Close</button></div></div>
+<div class="modal" id="authModal"><div class="box"><h2>Login / Register - JOKER MARKET</h2><input id="uName" placeholder="Full Name"><input id="uEmail" placeholder="Email"><input id="uPass" type="password" placeholder="Password"><button class="btn" onclick="register()">Create Account & Login</button><p style="font-size:12px;color:#666">Admin demo: admin@jokermarket.ng / admin123<br>Referral: Share your link and earn ₦500 per friend!</p><button class="btn" style="background:#ddd;color:#111" onclick="closeModals()">Close</button></div></div>
+<div class="modal" id="trackModal"><div class="box"><h2>📦 Track Order</h2><div id="orders"></div><button class="btn" style="background:#ddd;color:#111" onclick="closeModals()">Close</button></div></div>
+<div class="modal" id="adminModal"><div class="box"><h2>⚙️ Admin Dashboard - JOKER MARKET</h2><p id="sales">Total Sales: ₦0</p><input id="pName" placeholder="Product Name"><input id="pPrice" type="number" placeholder="Price ₦"><select id="pCat"><option>Electronics</option><option>Fashion</option><option>Shoes</option><option>Gadgets</option><option>Beauty</option><option>Accessories</option></select><input id="pImg" placeholder="Image URL (or leave empty)"><button class="btn" onclick="addProduct()">+ Add Product</button><input id="disc" placeholder="Create Discount Code e.g. SAVE20"><button class="btn btn2" onclick="alert('Discount '+document.getElementById('disc').value+' created!')">Create Promotion</button><h3>Manage Products</h3><div id="adminList"></div><h3>Orders & Deliveries</h3><div id="adminOrders"></div><button class="btn" style="background:#ddd;color:#111" onclick="closeModals()">Close</button></div></div>
+
+<script>
+let products = JSON.parse(localStorage.getItem('joker_products')||'null') || [
+{n:'Wireless Bluetooth Earbuds',p:8500,o:15000,c:'Gadgets',img:'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400',r:4.8},
+{n:'Men Sneakers - Running Shoes',p:18500,o:32000,c:'Shoes',img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400',r:4.9},
+{n:'Smart Watch Series 5',p:24500,o:45000,c:'Electronics',img:'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=400',r:4.7},
+{n:'Ladies Handbag - Premium',p:12500,o:22000,c:'Fashion',img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400',r:4.8},
+{n:'Vitamin C Face Serum',p:6800,o:12000,c:'Beauty',img:'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400',r:4.6},
+{n:'Wireless Power Bank 20000mAh',p:14500,o:25000,c:'Electronics',img:'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=400',r:4.9},
+{n:'Sunglasses - UV Protection',p:5500,o:10000,c:'Accessories',img:'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400',r:4.5},
+{n:'Hoodie - Unisex Streetwear',p:9800,o:18000,c:'Fashion',img:'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400',r:4.7}];
+let cart=JSON.parse(localStorage.getItem('joker_cart')||'[]'), wish=JSON.parse(localStorage.getItem('joker_wish')||'[]'), orders=JSON.parse(localStorage.getItem('joker_orders')||'[]'), discount=0;
+function save(){localStorage.setItem('joker_products',JSON.stringify(products));localStorage.setItem('joker_cart',JSON.stringify(cart));localStorage.setItem('joker_wish',JSON.stringify(wish));localStorage.setItem('joker_orders',JSON.stringify(orders));}
+function fmt(n){return '₦'+Number(n).toLocaleString()}
+function render(){
+ let cat=document.getElementById('catFilter').value, q=(document.getElementById('q').value||'').toLowerCase(), max=document.getElementById('maxPrice').value, sort=document.getElementById('sort').value;
+ let list=products.filter(x=>(cat=='All'||x.c==cat)&&x.n.toLowerCase().includes(q)&&(!max||x.p<=max));
+ if(sort=='low')list.sort((a,b)=>a.p-b.p); if(sort=='high')list.sort((a,b)=>b.p-a.p);
+ document.getElementById('grid').innerHTML=list.map((x,i)=>`<div class="card"><img src="${x.img}"><div class="p"><span class="badge">${x.c}</span><div><b>${x.n}</b></div><div>⭐ ${x.r} • 2k+ sold</div><div><span class="price">${fmt(x.p)}</span> <span class="old">${fmt(x.o)}</span> <span style="color:green">-${Math.round((1-x.p/x.o)*100)}%</span></div><button class="add" onclick="addCart(${products.indexOf(x)})">Add to Cart</button><button class="wish" onclick="addWish(${products.indexOf(x)})">♡ Wishlist</button></div></div>`).join('')||'<p>No products found.</p>';
+ document.getElementById('cartCount').innerText=cart.length; document.getElementById('wishCount').innerText=wish.length;
+ document.getElementById('cats').innerHTML=['All','Electronics','Fashion','Shoes','Gadgets','Beauty','Accessories'].map(c=>`<button class="${cat==c?'on':''}" onclick="filterCat('${c}')">${c}</button>`).join('');
+ renderCart(); renderAdmin();
+}
+function filterCat(c){document.getElementById('catFilter').value=c;render()}
+function doSearch(){render()}
+function addCart(i){cart.push(products[i]);save();render();alert(products[i].n+' added to cart!')}
+function addWish(i){if(!wish.includes(i))wish.push(i);save();render();alert('Saved to wishlist ❤️')}
+function renderCart(){
+ document.getElementById('cartItems').innerHTML=cart.map((x,i)=>`<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee"><span>${x.n}</span><b>${fmt(x.p)} <span onclick="cart.splice(${i},1);save();render()" style="color:red;cursor:pointer">✕</span></b></div>`).join('')||'Cart is empty';
+ let sub=cart.reduce((a,b)=>a+b.p,0), tot=sub*(1-discount); document.getElementById('total').innerText=`Subtotal: ${fmt(sub)} ${discount?'(Coupon -'+discount*100+'%)':''} | Total: ${fmt(tot)} • Delivery: ${tot>20000?'FREE':fmt(1500)}`;
+ document.getElementById('wishItems').innerHTML=wish.map(i=>`<div style="padding:8px 0;border-bottom:1px solid #eee">${products[i]?products[i].n:'Deleted'} <button onclick="addCart(${i})">Add to Cart</button></div>`).join('')||'No wishlist yet';
+ document.getElementById('orders').innerHTML=orders.map((o,i)=>`<div style="padding:10px;border:1px solid #eee;border-radius:10px;margin:6px 0"><b>Order #${1000+i}</b> - ${fmt(o.total)} - ${o.pay}<br>Status: <b>${o.status}</b> • ${o.items} items <button onclick="orders[${i}].status=orders[${i}].status=='Processing'?'Shipped':'Delivered';save();render()">Next Status →</button><br><small>Delivery notification sent</small></div>`).join('')||'No orders yet. Shop now!';
+}
+function applyCoupon(){let v=document.getElementById('coupon').value.toUpperCase(); if(v=='JOKER10'){discount=0.1;alert('10% discount applied!')} else if(v=='SAVE20'){discount=0.2;alert('20% discount applied!')} else alert('Invalid coupon. Try JOKER10'); render()}
+function checkout(){if(!cart.length)return alert('Cart is empty'); let tot=cart.reduce((a,b)=>a+b.p,0)*(1-discount); orders.push({items:cart.length,total:tot,pay:document.getElementById('pay').value,status:'Processing'}); cart=[];discount=0;save();render();alert('Order placed on JOKER MARKET! 🎉 You will get delivery updates.'); closeModals(); openModal('trackModal')}
+function register(){let e=document.getElementById('uEmail').value; if(!e)return alert('Enter email'); localStorage.setItem('joker_user',e); alert('Welcome to JOKER MARKET, '+(document.getElementById('uName').value||'Friend')+'! Your referral link: jokermarket.github.io/Jokermart/r/'+e.split('@')[0]+' - Earn ₦500 per friend'); closeModals()}
+function addProduct(){let n=document.getElementById('pName').value,p=+document.getElementById('pPrice').value; if(!n||!p)return alert('Enter name & price'); products.unshift({n,p,o:p*1.8,c:document.getElementById('pCat').value,img:document.getElementById('pImg').value||'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400',r:5.0}); save();render();alert('Product added to JOKER MARKET!')}
+function renderAdmin(){let sales=orders.reduce((a,b)=>a+b.total,0); document.getElementById('sales').innerText=`Total Sales: ${fmt(sales)} • Orders: ${orders.length} • Customers: ${localStorage.getItem('joker_user')?1:0} • Products: ${products.length}`; document.getElementById('adminList').innerHTML=products.map((x,i)=>`<div style="display:flex;justify-content:space-between;padding:6px 0">${x.n} - ${fmt(x.p)} <span><button onclick="let np=prompt('New price',${x.p});if(np){products[${i}].p=+np;save();render()}">Edit</button> <button onclick="products.splice(${i},1);save();render()">Delete</button></span></div>`).join(''); document.getElementById('adminOrders').innerHTML=orders.map((o,i)=>`<div>#${1000+i} - ${fmt(o.total)} - ${o.status} <button onclick="orders[${i}].status='Delivered';save();render()">Mark Delivered</button></div>`).join('')||'No orders yet'}
+function openModal(id){closeModals();document.getElementById(id).classList.add('open')}
+function closeModals(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('open'))}
+render();
+</script></body></html>
