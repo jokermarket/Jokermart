@@ -3,29 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JOKER MARKET - Shop Smart, Live Better</title>
+<title>JOKER MARKET</title>
 <style>
-*{box-sizing:border-box;font-family:Arial,sans-serif}
-body{margin:0;background:#fff5ef;color:#222}
-header{background:#ff6a00;color:#fff;padding:12px 14px;position:sticky;top:0;z-index:10}
-.top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.logo{font-size:22px;font-weight:900;cursor:pointer;user-select:none}.logo span{color:#111;background:#fff;padding:2px 6px;border-radius:6px}
-.search{flex:1;background:#fff;border-radius:20px;padding:2px;display:flex;overflow:hidden;min-width:140px}
-.search input{flex:1;border:0;padding:10px;outline:0}.search button{background:#111;color:#fff;border:0;padding:0 14px}
-.icons{display:flex;gap:12px;font-size:20px;cursor:pointer}.icons b{font-size:12px;background:#111;color:#fff;border-radius:50%;padding:2px 6px;vertical-align:top}
-.nav{display:flex;gap:10px;overflow:auto;padding:8px 0}
-.nav button{white-space:nowrap;border:0;background:#fff;color:#ff6a00;padding:7px 14px;border-radius:20px;font-weight:700;cursor:pointer}
-.nav button.on{background:#111;color:#fff}
+body{margin:0;font-family:Arial;background:#fff5ef}
+header{background:#ff6a00;color:#fff;padding:14px;position:sticky;top:0}
+.logo{font-size:24px;font-weight:900;cursor:pointer}
+.logo span{background:#fff;color:#111;padding:2px 7px;border-radius:6px}
+.search{margin-top:10px;background:#fff;border-radius:20px;display:flex;overflow:hidden}
+.search input{flex:1;border:0;padding:11px;outline:0}
+.search button{background:#111;color:#fff;border:0;padding:0 15px}
+.nav{display:flex;gap:8px;overflow:auto;margin-top:10px}
+.nav button{background:#fff;color:#ff6a00;border:0;padding:7px 14px;border-radius:20px;font-weight:700;white-space:nowrap}
 .banner{background:linear-gradient(90deg,#ff6a00,#ff9a3d);color:#fff;margin:12px;border-radius:16px;padding:18px}
-.banner h1{margin:0;font-size:28px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}
-@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
-.card{background:#fff;border:1px solid #ffe0cc;border-radius:14px;overflow:hidden}
-.card img{width:100%;height:150px;object-fit:cover}.card p{padding:10px}
-.price{color:#ff6a00;font-weight:900;font-size:18px}.old{text-decoration:line-through;color:#999;font-size:13px}
-.card button{width:100%;margin-top:9px;padding:9px;border-radius:8px;border:0;cursor:pointer}
-.add{background:#ff6a00;color:#fff;font-weight:800}.wish{background:#fff;border:1px solid #ddd!important}
-.filters{display:flex;gap:8px;padding:0 12px;flex-wrap:wrap}.filters input,.filters select{padding:9px;border:1px solid #ddd;border-radius:10px}
-.box{background:#fff;margin:12px;border-radius:16px;padding:16px}.box input,.box select{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:10px}
-.box button{width:100%;padding:13px;border:0;border-radius:12px;font-weight:900;cursor:pointer}.btn-orange{background:#ff6a00;color:#fff}.btn-dark{background:#111;color:#fff}.btn-red{background:#ff4444;color:#fff}.btn-green{background:#25D366;color:#fff}
-.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat div{background:#fff5ef;padding:14px;border-radius:12px;text-align:center}.stat b{font-size:22px;color:#ff6a
+.banner h1{margin:0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
+.card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid #ffe0cc}
+.card img{width:100%;height:140px;object-fit:cover}
+.card div{padding:10px}
+.card button{width:100%;padding:9px;border:0;border-radius:8px;margin-top:6px}
+.add{background:#ff6a00;color:#fff;font-weight:800}
+.box{background:#fff;margin:12px;border-radius:14px;padding:14px}
+.box input,.box select{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}
+.box button{width:100%;padding:12px;border:0;border-radius:10px;font-weight:800;margin-top:6px}
+.o{background:#ff6a00;color:#fff}.d{background:#111;color:#fff}.r{background:red;color:#fff}.g{background:#25D366;color:#fff}
+.modal{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:none;z-index:99;padding:15px;overflow:auto}
+.modal.open{display:block}
+.mbox{background:#fff;border-radius:16px;padding:16px;max-width:520px;margin:20px auto}
+.stat{display:flex;gap:8px}.stat div{flex:1;background:#fff5ef;padding:12px;border-radius:10px;text-align:center}
+.tabs2{display:flex;gap:8px;margin:12px 0}.tabs2 button{flex:1;padding:10px;border:0;border-radius:10px;background:#eee;font-weight:800}.tabs2 button.on{background:#111;color:#fff}
+footer{background:#111;color:#fff;text-align:center;padding:18px;margin-top:20px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo" onclick="tapLogo()">JOKER <span>MARKET</span></div>
+<div class
