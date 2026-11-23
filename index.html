@@ -6,103 +6,123 @@
 <title>JOKER MARKET</title>
 <style>
 body{margin:0;font-family:Arial;background:#fff5ef}
-header{background:#ff6a00;color:#fff;padding:14px}
-.logo{font-size:24px;font-weight:900}
+header{background:#ff6a00;color:#fff;padding:12px;position:sticky;top:0;z-index:10}
+.top{display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:22px;font-weight:900;cursor:pointer}
 .logo span{background:#fff;color:#111;padding:2px 7px;border-radius:6px}
+.ham{font-size:24px;background:#111;color:#fff;border:0;border-radius:8px;padding:6px 10px}
 .search{margin-top:10px;background:#fff;border-radius:20px;display:flex;overflow:hidden}
 .search input{flex:1;border:0;padding:11px;outline:0}
 .search button{background:#111;color:#fff;border:0;padding:0 15px}
-.nav{display:flex;gap:8px;overflow:auto;margin-top:10px}
-.nav button{background:#fff;color:#ff6a00;border:0;padding:7px 14px;border-radius:20px;font-weight:700}
+.menu{position:fixed;top:0;left:-260px;width:240px;height:100%;background:#111;color:#fff;z-index:99;padding:16px;transition:.3s;overflow:auto}
+.menu.open{left:0}
+.menu a{display:block;color:#fff;text-decoration:none;padding:12px 8px;border-bottom:1px solid #333;font-weight:700}
+.menu button{width:100%;padding:10px;border:0;border-radius:8px;margin-top:12px;background:#ff6a00;color:#fff;font-weight:800}
 .banner{background:#ff9a3d;color:#fff;margin:12px;border-radius:16px;padding:18px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
 .card{background:#fff;border-radius:14px;overflow:hidden}
 .card img{width:100%;height:140px;object-fit:cover}
 .card div{padding:10px}
-.card button{width:100%;padding:9px;border:0;border-radius:8px;background:#ff6a00;color:#fff;font-weight:800}
+.card button{width:100%;padding:9px;border:0;border-radius:8px;background:#ff6a00;color:#fff;font-weight:800;margin-top:4px}
+.cat{display:flex;gap:8px;overflow:auto;padding:0 12px}
+.cat button{background:#fff;color:#ff6a00;border:0;padding:7px 14px;border-radius:20px;font-weight:700;white-space:nowrap}
+.cat button.on{background:#111;color:#fff}
 .box{background:#fff;margin:12px;border-radius:14px;padding:14px}
-.box input,.box select{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}
+.box input,.box select,.box textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}
 .box button{width:100%;padding:12px;border:0;border-radius:10px;font-weight:800;margin-top:6px}
-.o{background:#ff6a00;color:#fff}.d{background:#111;color:#fff}.r{background:red;color:#fff}
-.modal{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:none;z-index:99;padding:15px;overflow:auto}
+.o{background:#ff6a00;color:#fff}.d{background:#111;color:#fff}.g{background:#fff;color:#111;border:1px solid #ddd!important}.fb{background:#1877F2;color:#fff}
+.modal{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:none;z-index:100;padding:15px;overflow:auto}
 .modal.open{display:block}
 .mbox{background:#fff;border-radius:16px;padding:16px;max-width:520px;margin:20px auto}
-.tabs2{display:flex;gap:8px;margin:12px 0}.tabs2 button{flex:1;padding:10px;border:0;border-radius:10px;background:#eee;font-weight:800}.tabs2 button.on{background:#111;color:#fff}
 footer{background:#111;color:#fff;text-align:center;padding:18px}
 </style>
 </head>
 <body>
-<header>
-<div class="logo" onclick="tapLogo()">JOKER <span>MARKET</span></div>
-<div class="search"><input id="topSearch" placeholder="Search..."><button onclick="doSearch()">Search</button></div>
-<div class="nav" id="nav"></div>
-</header>
-<div class="banner"><h1>Shop Smart, Live Better</h1><p>Quality products - Fast delivery</p></div>
-<h2 style="padding:0 12px">Products</h2>
-<div class="grid" id="grid"></div>
-<div id="emptyMsg" style="text-align:center;padding:30px"><h3>No products yet</h3><p>New products coming soon.</p></div>
-<div style="text-align:center;padding:12px"><button onclick="openCart()" style="background:#111;color:#fff;border:0;padding:12px 24px;border-radius:20px;font-weight:800">View Cart (<span id="cartCount">0</span>)</button></div>
+<div class="menu" id="menu">
+<h3>JOKER MARKET</h3>
+<a href="#" onclick="goHome()">🏠 Home</a>
+<a href="#" onclick="goHome()">🛍️ Shop</a>
+<a href="#" onclick="openUser()">👤 My Account</a>
+<a href="#" onclick="openSeller()">🏪 Seller Centre</a>
+<a href="#" onclick="openAdminAsk()">🔐 Admin Dashboard</a>
+<a href="#" onclick="openMembers()">👥 Members</a>
+<a href="#" onclick="copyMarketLink()">🔗 Market Link</a>
+<a href="#" onclick="openReviews()">⭐ Reviews</a>
+<a href="#" onclick="userLogout()">🚪 Logout</a>
+<button onclick="closeMenu()">Close Menu</button>
+</div>
 
-<div class="modal" id="adminModal"><div class="mbox">
-<div id="loginBox">
-<h2>Private Admin</h2>
-<input id="pass" type="password" placeholder="Password" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px;box-sizing:border-box">
-<button class="d" onclick="login()" style="width:100%;padding:12px;border:0;border-radius:10px;margin-top:8px">Login</button>
-<button onclick="closeAdmin()" style="width:100%;padding:10px;border:0;border-radius:10px;margin-top:8px">Close</button>
-<p style="font-size:12px;color:#888">Password: admin123</p>
+<header>
+<div class="top">
+<button class="ham" onclick="openMenu()">☰</button>
+<div class="logo" onclick="tapLogo()">JOKER <span>MARKET</span></div>
+<button id="userBtn" onclick="openUser()" style="background:#111;color:#fff;border:0;padding:8px 12px;border-radius:20px;font-weight:800">👤 Sign In</button>
 </div>
-<div id="adminBox" style="display:none">
-<h2>Admin Panel</h2>
-<p><b id="nP">0</b> Products | <b id="nO">0</b> Orders | <b id="nS">0</b> Sales</p>
-<div class="tabs2"><button id="t1" class="on" onclick="showA('dash')">Dashboard</button><button id="t2" onclick="showA('seller')">Seller</button><button id="t3" onclick="showA('orders')">Orders</button></div>
-<div id="aDash">
-<div class="box" style="margin:0"><h3>Add Product</h3>
-<input id="aName" placeholder="Product name"><input id="aPrice" type="number" placeholder="Price"><select id="aCat"><option>Food</option><option>Electronics</option><option>Fashion</option><option>Home</option></select><input id="aImg" placeholder="Image link (optional)"><button class="o" onclick="addAdmin()">Add Product</button></div>
-<div class="box" style="margin:12px 0 0"><h3>All Products</h3><div id="allP"></div></div>
+<div class="search"><input id="topSearch" placeholder="Search clothes, shoes, phones..."><button onclick="render()">Search</button></div>
+</header>
+
+<div class="banner"><h1>Shop Smart, Live Better</h1><p>Real sellers - Home delivery - Secure payment</p>
+<button onclick="openUser()" style="background:#fff;color:#ff6a00;border:0;padding:11px 18px;border-radius:20px;font-weight:900">👤 Sign In to Shop →</button>
+<button onclick="openSeller()" style="background:#111;color:#fff;border:0;padding:11px 18px;border-radius:20px;font-weight:900;margin-left:6px">Start Selling</button>
 </div>
-<div id="aSeller" style="display:none">
-<div class="box" style="margin:0"><h3>Seller - Under Admin</h3>
-<input id="sName" placeholder="Product name"><input id="sPrice" type="number" placeholder="Price"><select id="sCat"><option>Food</option><option>Electronics</option><option>Fashion</option><option>Home</option></select><input id="sImg" placeholder="Image link"><input id="sSeller" placeholder="Seller name e.g. Mama Nkechi Store"><button class="o" onclick="addSeller()">Add Seller Product</button><p id="sMsg" style="color:green"></p></div>
-<div class="box" style="margin:12px 0 0"><h3>Seller Products</h3><div id="sellList"></div></div>
-</div>
-<div id="aOrders" style="display:none"><div class="box" style="margin:0"><h3>All Orders</h3><div id="ordList"></div><button class="r" onclick="clearO()">Clear Orders</button></div></div>
-<button class="d" onclick="logout()" style="width:100%;padding:12px;border:0;border-radius:10px;margin-top:10px">Logout</button>
-<button onclick="closeAdmin()" style="width:100%;padding:10px;border:0;border-radius:10px;margin-top:8px">Close</button>
-</div>
+
+<div class="cat" id="nav"></div>
+<h2 style="padding:0 12px">Shop Products</h2>
+<div class="grid" id="grid"></div>
+<div id="emptyMsg" style="text-align:center;padding:30px"><h3>No products yet</h3><p>Be the first seller to add product.</p><button onclick="openSeller()" style="background:#ff6a00;color:#fff;border:0;padding:12px 20px;border-radius:20px;font-weight:800">Become a Seller</button></div>
+<div style="text-align:center;padding:12px"><button onclick="openUser()" style="background:#ff6a00;color:#fff;border:0;padding:12px 20px;border-radius:20px;font-weight:800;margin-right:6px">👤 Sign In</button><button onclick="openCart()" style="background:#111;color:#fff;border:0;padding:12px 20px;border-radius:20px;font-weight:800">View Cart (<span id="cartCount">0</span>)</button></div>
+
+<!--AUTH MODAL-->
+<div class="modal" id="userModal"><div class="mbox">
+<h2>👤 Welcome to JOKER MARKET</h2><p style="color:#666;font-size:13px">Sign in to buy, sell and track orders. Browse without account, sign in to checkout.</p>
+<button class="g" onclick="loginGoogle()">G &nbsp; Continue with Google</button>
+<button class="fb" onclick="loginFacebook()">f &nbsp; Continue with Facebook</button>
+<hr>
+<input id="uName" placeholder="Full name (for new account)">
+<input id="uEmail" placeholder="Email or Phone e.g. you@gmail.com / 090...">
+<input id="uPass" type="password" placeholder="Password">
+<button class="o" onclick="userLogin()">Continue with Email / Phone</button>
+<p><a href="#" onclick="forgotPass()">Forgot Password?</a></p>
+<p id="userMsg" style="color:green;font-weight:700"></p>
+<button onclick="closeUser()">Close</button>
 </div></div>
 
-<div class="modal" id="cartModal"><div class="mbox"><h2>Cart</h2><div id="cartItems"></div><h3 id="cartTotal">Total: 0</h3><button onclick="checkout()" style="width:100%;padding:13px;border:0;border-radius:10px;background:#25D366;color:#fff;font-weight:800">Order on WhatsApp</button><button onclick="closeCart()" style="width:100%;padding:10px;border:0;border-radius:10px;margin-top:8px">Close</button></div></div>
-<footer><h3>JOKER MARKET</h3><p>© 2026 Joker Market</p></footer>
+<!--SELLER MODAL-->
+<div class="modal" id="sellerModal"><div class="mbox">
+<h2>🏪 Seller Centre</h2>
+<p style="font-size:13px;color:#666">Register as seller. After approval, your products go live.</p>
+<input id="sShop" placeholder="Shop / Store name">
+<input id="sName" placeholder="Your full name">
+<input id="sPhone" placeholder="Phone number">
+<input id="sLoc" placeholder="Your location e.g. Lagos, Ikeja">
+<input id="pName" placeholder="Product name">
+<input id="pPrice" type="number" placeholder="Price ₦">
+<select id="pCat"><option>Clothes</option><option>Shoes</option><option>Phones</option><option>Accessories</option><option>Home products</option></select>
+<input id="pImg" placeholder="Product image link">
+<textarea id="pDesc" placeholder="Product description"></textarea>
+<button class="o" onclick="addSellerProduct()">Add Product / Apply as Seller</button>
+<p id="sMsg" style="color:green"></p>
+<button onclick="closeSeller()">Close</button>
+</div></div>
+
+<!--ADMIN MODAL-->
+<div class="modal" id="adminModal"><div class="mbox">
+<div id="loginBox"><h2>🔐 Admin Dashboard</h2><p>Only authorized admin.</p>
+<input id="pass" type="password" placeholder="Admin password" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px">
+<button class="d" onclick="loginAdmin()">Login</button><button onclick="closeAdmin()">Close</button><p style="font-size:12px;color:#888">Demo password: admin123 - Change in Supabase later</p></div>
+<div id="adminBox" style="display:none"><h2>Admin Dashboard - Real Data</h2>
+<p>Products: <b id="nP">0</b> | Orders: <b id="nO">0</b> | Members: <b id="nM">0</b> | Sellers: <b id="nS">0</b></p>
+<p>Visitors: <b id="nV">0</b> | Reviews: <b id="nR">0</b> | Complaints: <b id="nC">0</b></p>
+<div class="box"><h3>All Products</h3><div id="allP"></div></div>
+<div class="box"><h3>All Orders</h3><div id="ordList"></div></div>
+<button class="d" onclick="logoutAdmin()">Logout</button><button onclick="closeAdmin()">Close</button></div>
+</div></div>
+
+<!--OTHER MODALS-->
+<div class="modal" id="cartModal"><div class="mbox"><h2>Cart</h2><div id="cartItems"></div><h3 id="cartTotal">Total: ₦0</h3><p style="font-size:13px">Delivery address go be asked at checkout in Phase 3.</p><button onclick="checkout()" style="width:100%;padding:13px;border:0;border-radius:10px;background:#25D366;color:#fff;font-weight:800">Proceed to Checkout (Login Required)</button><button onclick="closeCart()">Close</button></div></div>
+<div class="modal" id="infoModal"><div class="mbox"><h2 id="infoTitle">Info</h2><div id="infoBody"></div><button onclick="closeInfo()">Close</button></div></div>
+
+<footer><h3>JOKER MARKET</h3><p>Share: <button onclick="shareMarket('whatsapp')">WhatsApp</button> <button onclick="shareMarket('facebook')">Facebook</button> <button onclick="shareMarket('instagram')">Instagram</button> <button onclick="shareMarket('tiktok')">TikTok</button></p><p>© 2026 Joker Market - Shop Smart, Live Better</p></footer>
 <!--ADD PART2 HERE-->
 </body>
-</html><script>
-var products=[];
-try{products=JSON.parse(localStorage.getItem("jm2")||"[]");}catch(e){products=[];}
-var orders=[];
-try{orders=JSON.parse(localStorage.getItem("jmO")||"[]");}catch(e){orders=[];}
-var cart={}; var taps=0; var lastTap=0; var activeCat="All";
-function save(){localStorage.setItem("jm2",JSON.stringify(products));localStorage.setItem("jmO",JSON.stringify(orders));}
-function tapLogo(){var n=Date.now();if(n-lastTap>2000)taps=0;lastTap=n;taps++;if(taps>=5){taps=0;document.getElementById("adminModal").className="modal open";}}
-if(window.location.search.indexOf("admin")!==-1){document.getElementById("adminModal").className="modal open";}
-function closeAdmin(){document.getElementById("adminModal").className="modal";}
-function login(){if(document.getElementById("pass").value==="admin123"){document.getElementById("loginBox").style.display="none";document.getElementById("adminBox").style.display="block";refreshAdmin();}else{alert("Wrong password");}}
-function logout(){document.getElementById("loginBox").style.display="block";document.getElementById("adminBox").style.display="none";document.getElementById("pass").value="";}
-function showA(w){document.getElementById("aDash").style.display="none";document.getElementById("aSeller").style.display="none";document.getElementById("aOrders").style.display="none";document.getElementById("t1").className="";document.getElementById("t2").className="";document.getElementById("t3").className="";if(w==="dash"){document.getElementById("aDash").style.display="block";document.getElementById("t1").className="on";}if(w==="seller"){document.getElementById("aSeller").style.display="block";document.getElementById("t2").className="on";}if(w==="orders"){document.getElementById("aOrders").style.display="block";document.getElementById("t3").className="on";}}
-var cats=["All","Food","Electronics","Fashion","Home"];var nh="";
-for(var i=0;i<cats.length;i++){nh=nh+'<button onclick="setCat(\''+cats[i]+'\')">'+cats[i]+'</button>';}
-document.getElementById("nav").innerHTML=nh;
-function setCat(c){activeCat=c;render();}
-function doSearch(){render();}
-function render(){var list=[];for(var i=0;i<products.length;i++){if(activeCat!=="All"&&products[i].cat!==activeCat)continue;list.push(products[i]);}var h="";for(var j=0;j<list.length;j++){var p=list[j];h=h+'<div class="card"><img src="'+p.img+'"><div><b>'+p.name+'</b><br><small>'+p.cat+' - '+p.seller+'</small><br><b style="color:#ff6a00">N'+p.price+'</b><br><button onclick="addCart('+p.id+')">Add to Cart</button></div></div>';}document.getElementById("grid").innerHTML=h;document.getElementById("emptyMsg").style.display=list.length===0?"block":"none";}
-function addCart(id){cart[id]=(cart[id]||0)+1;updateCart();alert("Added to cart");}
-function updateCart(){var n=0;for(var k in cart)n=n+cart[k];document.getElementById("cartCount").innerHTML=n;}
-function openCart(){var html="";var total=0;for(var id in cart){var f=null;for(var i=0;i<products.length;i++){if(products[i].id==id)f=products[i];}if(f){total=total+f.price*cart[id];html=html+'<p>'+f.name+' x '+cart[id]+' = N'+(f.price*cart[id])+'</p>';}}document.getElementById("cartItems").innerHTML=html||"Cart empty";document.getElementById("cartTotal").innerHTML="Total: N"+total;document.getElementById("cartModal").className="modal open";}
-function closeCart(){document.getElementById("cartModal").className="modal";}
-function checkout(){var total=0;var msg="Hello JOKER MARKET, I want to order: ";for(var id in cart){var f=null;for(var i=0;i<products.length;i++){if(products[i].id==id)f=products[i];}if(f){total=total+f.price*cart[id];msg=msg+f.name+" x "+cart[id]+", ";}}orders.unshift({date:new Date().toLocaleString(),total:total,text:msg});save();cart={};updateCart();closeCart();alert("Order saved");window.open("https://wa.me/2349000000000?text="+encodeURIComponent(msg+" Total N"+total));}
-function addAdmin(){var n=document.getElementById("aName").value;var pr=Number(document.getElementById("aPrice").value);if(!n||!pr){alert("Put name and price");return;}var img=document.getElementById("aImg").value||"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400";products.unshift({id:Date.now(),name:n,price:pr,cat:document.getElementById("aCat").value,seller:"Admin",img:img});save();render();refreshAdmin();alert("Added");}
-function addSeller(){var n=document.getElementById("sName").value;var pr=Number(document.getElementById("sPrice").value);if(!n||!pr){alert("Put name and price");return;}var img=document.getElementById("sImg").value||"https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400";var s=document.getElementById("sSeller").value||"Seller";products.unshift({id:Date.now(),name:n,price:pr,cat:document.getElementById("sCat").value,seller:s,img:img});save();render();refreshAdmin();document.getElementById("sMsg").innerHTML="Added for "+s;}
-function delP(id){var np=[];for(var i=0;i<products.length;i++){if(products[i].id!==id)np.push(products[i]);}products=np;save();render();refreshAdmin();}
-function clearO(){orders=[];save();refreshAdmin();}
-function refreshAdmin(){document.getElementById("nP").innerHTML=products.length;document.getElementById("nO").innerHTML=orders.length;var s=0;for(var i=0;i<orders.length;i++)s=s+orders[i].total;document.getElementById("nS").innerHTML="N"+s;var h="";for(var j=0;j<products.length;j++){h=h+'<p>'+products[j].name+' - N'+products[j].price+' ('+products[j].seller+') <button onclick="delP('+products[j].id+')">Delete</button></p>';}document.getElementById("allP").innerHTML=h||"No products";document.getElementById("sellList").innerHTML=h||"No products";var o="";for(var k=0;k<orders.length;k++){o=o+'<p>'+orders[k].date+' - N'+orders[k].total+'<br>'+orders[k].text+'</p>';}document.getElementById("ordList").innerHTML=o||"No orders";}
-render();
-</script>
+</html>
