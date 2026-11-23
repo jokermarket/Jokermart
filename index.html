@@ -3,38 +3,276 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JOKER MARKET</title>
+<title>JOKER MARKET - Shop Smart, Live Better</title>
+
 <style>
-body{margin:0;font-family:Arial;background:#fff5ef}
-header{background:#ff6a00;color:#fff;padding:14px;position:sticky;top:0}
-.logo{font-size:24px;font-weight:900;cursor:pointer}
-.logo span{background:#fff;color:#111;padding:2px 7px;border-radius:6px}
-.search{margin-top:10px;background:#fff;border-radius:20px;display:flex;overflow:hidden}
-.search input{flex:1;border:0;padding:11px;outline:0}
-.search button{background:#111;color:#fff;border:0;padding:0 15px}
-.nav{display:flex;gap:8px;overflow:auto;margin-top:10px}
-.nav button{background:#fff;color:#ff6a00;border:0;padding:7px 14px;border-radius:20px;font-weight:700;white-space:nowrap}
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#fff5ef;color:#222}
+header{background:#ff6a00;color:#fff;padding:12px 14px;position:sticky;top:0;z-index:10}
+.top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.logo{font-size:22px;font-weight:900;cursor:pointer;user-select:none}
+.logo span{color:#111;background:#fff;padding:2px 6px;border-radius:6px}
+.search{flex:1;background:#fff;border-radius:20px;padding:2px;display:flex;overflow:hidden;min-width:140px}
+.search input{flex:1;border:0;padding:10px;outline:0;min-width:0}
+.search button{background:#111;color:#fff;border:0;padding:0 14px}
+.icons{display:flex;gap:12px;font-size:20px;cursor:pointer}
+.icons b{font-size:12px;background:#111;color:#fff;border-radius:50%;padding:2px 6px;vertical-align:top}
+.nav{display:flex;gap:10px;overflow:auto;padding:8px 0}
+.nav button{white-space:nowrap;border:0;background:#fff;color:#ff6a00;padding:7px 14px;border-radius:20px;font-weight:700;cursor:pointer}
+.nav button.on{background:#111;color:#fff}
 .banner{background:linear-gradient(90deg,#ff6a00,#ff9a3d);color:#fff;margin:12px;border-radius:16px;padding:18px}
-.banner h1{margin:0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
-.card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid #ffe0cc}
-.card img{width:100%;height:140px;object-fit:cover}
-.card div{padding:10px}
-.card button{width:100%;padding:9px;border:0;border-radius:8px;margin-top:6px}
+.banner h1{margin:0;font-size:28px}
+.banner p{margin-bottom:0}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+.card{background:#fff;border:1px solid #ffe0cc;border-radius:14px;overflow:hidden}
+.card img{width:100%;height:150px;object-fit:cover}
+.card p{padding:10px;margin:0}
+.price{color:#ff6a00;font-weight:900;font-size:18px}
+.old{text-decoration:line-through;color:#999;font-size:13px}
+.card button{width:100%;margin-top:9px;padding:9px;border-radius:8px;border:0;cursor:pointer}
 .add{background:#ff6a00;color:#fff;font-weight:800}
-.box{background:#fff;margin:12px;border-radius:14px;padding:14px}
-.box input,.box select{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}
-.box button{width:100%;padding:12px;border:0;border-radius:10px;font-weight:800;margin-top:6px}
-.o{background:#ff6a00;color:#fff}.d{background:#111;color:#fff}.r{background:red;color:#fff}.g{background:#25D366;color:#fff}
-.modal{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:none;z-index:99;padding:15px;overflow:auto}
-.modal.open{display:block}
-.mbox{background:#fff;border-radius:16px;padding:16px;max-width:520px;margin:20px auto}
-.stat{display:flex;gap:8px}.stat div{flex:1;background:#fff5ef;padding:12px;border-radius:10px;text-align:center}
-.tabs2{display:flex;gap:8px;margin:12px 0}.tabs2 button{flex:1;padding:10px;border:0;border-radius:10px;background:#eee;font-weight:800}.tabs2 button.on{background:#111;color:#fff}
-footer{background:#111;color:#fff;text-align:center;padding:18px;margin-top:20px}
+.wish{background:#fff;border:1px solid #ddd!important}
+.filters{display:flex;gap:8px;padding:0 12px;flex-wrap:wrap}
+.filters input,.filters select{padding:9px;border:1px solid #ddd;border-radius:10px}
+.box{background:#fff;margin:12px;border-radius:16px;padding:16px}
+.box input,.box select{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:10px}
+.box button{width:100%;padding:13px;border:0;border-radius:12px;font-weight:900;cursor:pointer}
+.btn-orange{background:#ff6a00;color:#fff}
+.btn-dark{background:#111;color:#fff}
+.btn-red{background:#ff4444;color:#fff}
+.btn-green{background:#25D366;color:#fff}
+.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat div{background:#fff5ef;padding:14px;border-radius:12px;text-align:center}
+.stat b{font-size:22px;color:#ff6a00}
+footer{background:#111;color:#fff;text-align:center;padding:25px;margin-top:25px}
+.empty{text-align:center;padding:30px;color:#777}
 </style>
 </head>
+
 <body>
+
 <header>
-<div class="logo" onclick="tapLogo()">JOKER <span>MARKET</span></div>
-<div class
+ <div class="top">
+  <div class="logo">JOKER <span>MARKET</span></div>
+
+  <div class="search">
+   <input id="searchInput" type="text" placeholder="Search products...">
+   <button onclick="searchProducts()">Search</button>
+  </div>
+
+  <div class="icons">
+   <span onclick="showWishlist()">❤️</span>
+   <span onclick="showCart()">🛒<b id="cartCount">0</b></span>
+  </div>
+ </div>
+
+ <div class="nav">
+  <button class="on" onclick="filterCategory('All',this)">All</button>
+  <button onclick="filterCategory('Electronics',this)">Electronics</button>
+  <button onclick="filterCategory('Fashion',this)">Fashion</button>
+  <button onclick="filterCategory('Shoes',this)">Shoes</button>
+  <button onclick="filterCategory('Home',this)">Home</button>
+  <button onclick="filterCategory('Beauty',this)">Beauty</button>
+ </div>
+</header>
+
+<section class="banner">
+ <h1>Shop Smart, Live Better!</h1>
+ <p>Discover amazing products at great prices.</p>
+ <p>Welcome to JOKER MARKET.</p>
+</section>
+
+<div class="filters">
+ <input id="filterSearch" placeholder="Find a product..." oninput="searchProducts()">
+ <select id="sortProducts" onchange="sortProducts()">
+  <option value="default">Sort products</option>
+  <option value="low">Price: Low to High</option>
+  <option value="high">Price: High to Low</option>
+ </select>
+</div>
+
+<h2 style="padding:0 12px">Featured Products</h2>
+
+<div class="grid" id="productGrid"></div>
+
+<section class="box" id="cartSection" style="display:none">
+ <h2>Your Shopping Cart</h2>
+ <div id="cartItems"></div>
+ <h3 id="cartTotal">Total: ₦0</h3>
+ <button class="btn-orange" onclick="checkout()">Continue to Checkout</button>
+ <button class="btn-dark" onclick="closeCart()" style="margin-top:8px">Continue Shopping</button>
+</section>
+
+<section class="box" id="wishlistSection" style="display:none">
+ <h2>Your Wishlist ❤️</h2>
+ <div id="wishlistItems"></div>
+ <button class="btn-dark" onclick="closeWishlist()">Continue Shopping</button>
+</section>
+
+<footer>
+ <h2>JOKER MARKET</h2>
+ <p>Shop Smart, Live Better.</p>
+ <p>Thank you for shopping with us.</p>
+ <p>© 2026 JOKER MARKET. All rights reserved.</p>
+</footer>
+
+<script>
+const products = [
+ {id:1,name:"Smart Phone",category:"Electronics",price:85000,image:"https://placehold.co/400x300?text=Smart+Phone"},
+ {id:2,name:"Wireless Headphones",category:"Electronics",price:15000,image:"https://placehold.co/400x300?text=Headphones"},
+ {id:3,name:"Fashion Shirt",category:"Fashion",price:12000,image:"https://placehold.co/400x300?text=Fashion+Shirt"},
+ {id:4,name:"Men Sneakers",category:"Shoes",price:25000,image:"https://placehold.co/400x300?text=Sneakers"},
+ {id:5,name:"Home Decor",category:"Home",price:18000,image:"https://placehold.co/400x300?text=Home+Decor"},
+ {id:6,name:"Beauty Kit",category:"Beauty",price:10000,image:"https://placehold.co/400x300?text=Beauty+Kit"}
+];
+
+let cart = [];
+let wishlist = [];
+let currentCategory = "All";
+let visibleProducts = [...products];
+
+function money(amount){
+ return "₦" + amount.toLocaleString("en-NG");
+}
+
+function renderProducts(items){
+ const grid = document.getElementById("productGrid");
+
+ if(items.length === 0){
+  grid.innerHTML = '<div class="empty">No products found.</div>';
+  return;
+ }
+
+ grid.innerHTML = items.map(p => `
+  <div class="card">
+   <img src="${p.image}" alt="${p.name}">
+   <p>
+    <strong>${p.name}</strong><br>
+    <span class="price">${money(p.price)}</span><br>
+    <small>${p.category}</small>
+    <button class="add" onclick="addToCart(${p.id})">Add to Cart</button>
+    <button class="wish" onclick="addToWishlist(${p.id})">❤️ Wishlist</button>
+   </p>
+  </div>
+ `).join("");
+}
+
+function filterCategory(category,button){
+ currentCategory = category;
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("on"));
+ button.classList.add("on");
+
+ visibleProducts = category === "All"
+  ? [...products]
+  : products.filter(p=>p.category===category);
+
+ renderProducts(visibleProducts);
+}
+
+function searchProducts(){
+ const value = (
+  document.getElementById("searchInput").value ||
+  document.getElementById("filterSearch").value
+ ).toLowerCase();
+
+ const result = products.filter(p=>
+  (currentCategory==="All" || p.category===currentCategory) &&
+  p.name.toLowerCase().includes(value)
+ );
+
+ renderProducts(result);
+}
+
+function sortProducts(){
+ const sort = document.getElementById("sortProducts").value;
+ let result = [...visibleProducts];
+
+ if(sort==="low") result.sort((a,b)=>a.price-b.price);
+ if(sort==="high") result.sort((a,b)=>b.price-a.price);
+
+ renderProducts(result);
+}
+
+function addToCart(id){
+ const product = products.find(p=>p.id===id);
+ cart.push(product);
+ document.getElementById("cartCount").textContent=cart.length;
+ alert(product.name+" added to your cart!");
+}
+
+function showCart(){
+ document.getElementById("wishlistSection").style.display="none";
+ document.getElementById("cartSection").style.display="block";
+
+ const items = document.getElementById("cartItems");
+
+ if(cart.length===0){
+  items.innerHTML="<p>Your cart is empty.</p>";
+ }else{
+  items.innerHTML=cart.map((p,i)=>`
+   <p>${p.name} - ${money(p.price)}
+   <button onclick="removeFromCart(${i})">Remove</button></p>
+  `).join("");
+ }
+
+ const total=cart.reduce((sum,p)=>sum+p.price,0);
+ document.getElementById("cartTotal").textContent="Total: "+money(total);
+ document.getElementById("cartSection").scrollIntoView();
+}
+
+function removeFromCart(index){
+ cart.splice(index,1);
+ document.getElementById("cartCount").textContent=cart.length;
+ showCart();
+}
+
+function closeCart(){
+ document.getElementById("cartSection").style.display="none";
+}
+
+function addToWishlist(id){
+ const product=products.find(p=>p.id===id);
+ if(!wishlist.some(p=>p.id===id)){
+  wishlist.push(product);
+  alert(product.name+" added to wishlist!");
+ }else{
+  alert("This product is already in your wishlist.");
+ }
+}
+
+function showWishlist(){
+ document.getElementById("cartSection").style.display="none";
+ document.getElementById("wishlistSection").style.display="block";
+
+ const items=document.getElementById("wishlistItems");
+
+ if(wishlist.length===0){
+  items.innerHTML="<p>Your wishlist is empty.</p>";
+ }else{
+  items.innerHTML=wishlist.map(p=>
+   `<p>${p.name} - ${money(p.price)}</p>`
+  ).join("");
+ }
+
+ document.getElementById("wishlistSection").scrollIntoView();
+}
+
+function closeWishlist(){
+ document.getElementById("wishlistSection").style.display="none";
+}
+
+function checkout(){
+ if(cart.length===0){
+  alert("Your cart is empty.");
+  return;
+ }
+
+ alert("This is a demo storefront. Online checkout and payment have not been connected yet.");
+}
+
+renderProducts(products);
+</script>
+
+</body>
+</html>
