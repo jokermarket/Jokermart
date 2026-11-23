@@ -9,15 +9,14 @@
 body{margin:0;background:#fff5ef;color:#222}
 header{background:#ff6a00;color:#fff;padding:12px 14px;position:sticky;top:0;z-index:10}
 .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.logo{font-size:22px;font-weight:900}.logo span{color:#111;background:#fff;padding:2px 6px;border-radius:6px}
+.logo{font-size:22px;font-weight:900;cursor:pointer;user-select:none}.logo span{color:#111;background:#fff;padding:2px 6px;border-radius:6px}
 .search{flex:1;background:#fff;border-radius:20px;padding:2px;display:flex;overflow:hidden;min-width:140px}
 .search input{flex:1;border:0;padding:10px;outline:0}.search button{background:#111;color:#fff;border:0;padding:0 14px}
 .icons{display:flex;gap:12px;font-size:20px;cursor:pointer}.icons b{font-size:12px;background:#111;color:#fff;border-radius:50%;padding:2px 6px;vertical-align:top}
 .nav{display:flex;gap:10px;overflow:auto;padding:8px 0}
 .nav button{white-space:nowrap;border:0;background:#fff;color:#ff6a00;padding:7px 14px;border-radius:20px;font-weight:700;cursor:pointer}
 .nav button.on{background:#111;color:#fff}
-.tabs{display:flex;gap:8px;padding:12px}.tabs button{flex:1;padding:12px;border:0;border-radius:12px;font-weight:800;cursor:pointer;background:#fff}.tabs button.on{background:#111;color:#fff}
-.banner{background:linear-gradient(90deg,#ff6a00,#ff9a3d);color:#fff;margin:0 12px 12px;border-radius:16px;padding:18px}
+.banner{background:linear-gradient(90deg,#ff6a00,#ff9a3d);color:#fff;margin:12px;border-radius:16px;padding:18px}
 .banner h1{margin:0;font-size:28px}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px}
 @media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
@@ -25,72 +24,8 @@ header{background:#ff6a00;color:#fff;padding:12px 14px;position:sticky;top:0;z-i
 .card img{width:100%;height:150px;object-fit:cover}.card p{padding:10px}
 .price{color:#ff6a00;font-weight:900;font-size:18px}.old{text-decoration:line-through;color:#999;font-size:13px}
 .card button{width:100%;margin-top:9px;padding:9px;border-radius:8px;border:0;cursor:pointer}
-.add{background:#ff6a00;color:#fff;font-weight:800}.wish{background:#fff;border:1px solid #ddd!important}.del{background:#ff4444;color:#fff}
+.add{background:#ff6a00;color:#fff;font-weight:800}.wish{background:#fff;border:1px solid #ddd!important}
 .filters{display:flex;gap:8px;padding:0 12px;flex-wrap:wrap}.filters input,.filters select{padding:9px;border:1px solid #ddd;border-radius:10px}
-.box{background:#fff;margin:12px;border-radius:16px;padding:16px}.box input,.box select,.box textarea{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:10px}
-.box button{width:100%;padding:13px;border:0;border-radius:12px;font-weight:900;cursor:pointer}.btn-orange{background:#ff6a00;color:#fff}.btn-dark{background:#111;color:#fff}.btn-red{background:#ff4444;color:#fff}
-.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat div{background:#fff5ef;padding:14px;border-radius:12px;text-align:center}.stat b{font-size:22px;color:#ff6a00}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-end;justify-content:center}
-.modal.open{display:flex}.modal-box{background:#fff;width:100%;max-width:520px;border-radius:20px 20px 0 0;padding:18px;max-height:85vh;overflow:auto}
-.cart-item{display:flex;gap:10px;align-items:center;border-bottom:1px solid #eee;padding:10px 0}
-.cart-item img{width:60px;height:60px;object-fit:cover;border-radius:8px}.qty button{padding:4px 10px;border:1px solid #ddd;background:#fff;border-radius:6px}
-.checkout{background:#25D366;color:#fff;border:0;width:100%;padding:14px;border-radius:12px;font-weight:900;font-size:16px;margin-top:12px}
-.close{background:#eee;border:0;width:100%;padding:10px;border-radius:10px;margin-top:8px}
-footer{background:#111;color:#fff;text-align:center;padding:20px;margin-top:20px}
-.hidden{display:none}
-</style>
-</head>
-<body>
-<header>
-<div class="top">
-<div class="logo">JOKER <span>MARKET</span></div>
-<div class="search"><input id="searchInput" placeholder="Search products..."><button onclick="doSearch()">Search</button></div>
-<div class="icons"><span onclick="showWish()">❤️ <b id="wishCount">0</b></span><span onclick="openCart()">🛒 <b id="cartCount">0</b></span></div>
-</div>
-<div class="nav" id="nav"></div>
-</header>
-
-<div class="tabs">
-<button id="tabShop" class="on" onclick="showTab('shop')">🛍️ Shop</button>
-<button id="tabSeller" onclick="showTab('seller')">🏪 Seller</button>
-<button id="tabAdmin" onclick="showTab('admin')">⚙️ Admin</button>
-</div>
-
-<div id="pageShop">
-<div class="banner"><h1>Shop Smart, Live Better</h1><p>Quality products • Fast delivery • Trusted sellers</p><button onclick="scrollToProducts()" style="background:#fff;color:#ff6a00;border:0;padding:10px 18px;border-radius:20px;font-weight:800">Shop Now →</button></div>
-<div class="filters">
-<input id="filterSearch" placeholder="Filter products..." oninput="render()">
-<select id="filterCat" onchange="render()"><option value="All">All Categories</option><option>Food</option><option>Electronics</option><option>Fashion</option><option>Home</option></select>
-<select id="filterSort" onchange="render()"><option value="pop">Most Popular</option><option value="low">Price: Low to High</option><option value="high">Price: High to Low</option></select>
-</div>
-<div style="padding:0 12px"><h2>🔥 Products</h2></div>
-<div class="grid" id="grid"></div>
-<div id="emptyShop" style="text-align:center;padding:30px;display:none"><h3>No products yet</h3><p>Sellers go add products soon.<br>Go to Seller tab to add your first product.</p><button onclick="showTab('seller')" style="background:#ff6a00;color:#fff;border:0;padding:12px 20px;border-radius:20px;font-weight:800">Become a Seller →</button></div>
-</div>
-
-<div id="pageSeller" class="hidden">
-<div class="box"><h2>🏪 Seller Panel - Sell Your Product</h2>
-<input id="sName" placeholder="Product name e.g. Bag of Rice">
-<input id="sPrice" type="number" placeholder="Price e.g. 85000">
-<input id="sOld" type="number" placeholder="Old price (optional)">
-<select id="sCat"><option>Food</option><option>Electronics</option><option>Fashion</option><option>Home</option></select>
-<input id="sImg" placeholder="Image link (paste image URL) or leave empty">
-<input id="sSeller" placeholder="Your name / Shop name">
-<button class="btn-orange" onclick="sellerAdd()">+ Add My Product</button>
-<p id="sellerMsg" style="color:green;font-weight:700"></p>
-</div>
-<div class="box"><h3>My Products</h3><div id="sellerList"></div></div>
-<div class="box"><h3>📦 My Orders</h3><div id="sellerOrders"></div></div>
-</div>
-
-<div id="pageAdmin" class="hidden">
-<div class="box" id="adminLogin">
-<h2>⚙️ Admin Login</h2><p>Password: <b>admin123</b></p>
-<input id="adminPass" type="password" placeholder="Enter admin password">
-<button class="btn-dark" onclick="adminLogin()">Login as Admin</button>
-</div>
-<div id="adminPanel" class="hidden">
-<div class="box"><h2>Admin Dashboard</h2>
-<div class="stat"><div><b id="statProducts">0</b><br>Products</div><div><b id="statOrders">0</b><br>Orders</div><div><b id="statSales">₦0</b><br>Total Sales</div></div>
-</div>
-<div class="box"><h3>📦 All Orders</h3><div id="adminOrders"></div><button class="btn-red" onclick="clearOrders()">Clear All
+.box{background:#fff;margin:12px;border-radius:16px;padding:16px}.box input,.box select{width:100%;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:10px}
+.box button{width:100%;padding:13px;border:0;border-radius:12px;font-weight:900;cursor:pointer}.btn-orange{background:#ff6a00;color:#fff}.btn-dark{background:#111;color:#fff}.btn-red{background:#ff4444;color:#fff}.btn-green{background:#25D366;color:#fff}
+.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat div{background:#fff5ef;padding:14px;border-radius:12px;text-align:center}.stat b{font-size:22px;color:#ff6a
