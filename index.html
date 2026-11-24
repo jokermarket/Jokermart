@@ -126,3 +126,30 @@ footer{background:#111;color:#fff;text-align:center;padding:18px}
 <!--ADD PART2 HERE-->
 </body>
 </html>
+<script>
+// FIX - make all buttons work even if IDs different
+function openMenu(){var m=document.getElementById("sideMenu")||document.getElementById("menu");if(m)m.className="menu open";else alert("Menu not found - Part 2 never saved")}
+function closeMenu(){var m=document.getElementById("sideMenu")||document.getElementById("menu");if(m)m.className="menu"}
+function openUser(){var m=document.getElementById("userModal");if(!m){alert("Sign In box not found - Part 2 never saved, check GitHub file");return}m.className="modal open"}
+function closeUser(){var m=document.getElementById("userModal");if(m)m.className="modal"}
+function openSeller(){var m=document.getElementById("sellerModal");if(!m){alert("Seller box not found - Part 2 never saved");return}m.className="modal open"}
+function closeSeller(){var m=document.getElementById("sellerModal");if(m)m.className="modal"}
+function openAdmin(){var m=document.getElementById("adminModal");if(!m){alert("Admin box not found");return}m.className="modal open"}
+function closeAdmin(){var m=document.getElementById("adminModal");if(m)m.className="modal"}
+function openCart(){var m=document.getElementById("cartModal");if(m)m.className="modal open"}
+function closeCart(){var m=document.getElementById("cartModal");if(m)m.className="modal"}
+function openInfo(){var m=document.getElementById("infoModal");if(m)m.className="modal open"}
+function closeInfo(){var m=document.getElementById("infoModal");if(m)m.className="modal"}
+function openMembers(){alert("Members: Total members go show after Supabase setup. For now Sign In to join.")}
+function openReviews(){alert("Reviews: No reviews yet. Write review go come in Phase 4.")}
+function copyMarketLink(){if(navigator.share){navigator.share({title:"JOKER MARKET",url:location.href})}else{prompt("Copy link:",location.href)}}
+function shareMarket(){copyMarketLink()}
+function goHome(){closeMenu();window.scrollTo(0,0)}
+function checkCart(){openCart()}
+function tapLogo(){goHome()}
+</script>
+TOP
+Part 1 - Header, Menu, Banner, Products
+Part 2 - Sign In box, Seller box, Admin box
+FIX - Buttons wey make am open
+BOTTOM - </body>
