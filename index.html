@@ -160,3 +160,4 @@ document.getElementById("cartTotal").innerText=cart.length?"Total: ₦"+total.to
 document.getElementById("cartModal").className="modal open";
 }
 function openCheckout(){if(!cart.length){alert("Your cart is empty");return}closeModal("cartModal");let total=cart.reduce((a,p)=>a+p.price,0);document.getElementById("checkoutTotal").innerText="Total to Pay to Admin: ₦"+total.toLocaleString();document.getElementById
+if(!products||products.length===0){
