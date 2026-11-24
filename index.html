@@ -112,4 +112,60 @@ function showSignIn(){document.getElementById('signInBox').classList.toggle('hid
 function doLogin(){
   let ph=document.getElementById('loginPhone').value.trim();
   if(ph===ADMIN_OPAY.number){document.getElementById('adminBox').classList.remove('hidden');alert('Welcome Admin! Dashboard don open. DB Mode: '+DB_MODE);document.getElementById('adminBox').scrollIntoView();}
-  else{alert('Welcome! You don sign in
+  else{alert('Welcome! You don sign in as buyer.');}
+}
+function buy(name,price){alert('You wan buy '+name+' for ₦'+price.toLocaleString()+'\nPay to '+ADMIN_OPAY.bank+' - '+ADMIN_OPAY.number+' - '+ADMIN_OPAY.name+' (Escrow). Seller go deliver after payment.');}
+function generateSellerLink(){
+  let n=document.getElementById('sellerName').value;let p=document.getElementById('sellerPhone').value;
+  if(!n||!p){alert('Put seller name and phone first');return;}
+  let code='JOKER-'+Math.random().toString(36).substring(2,8).toUpperCase();
+  let link=window.location.origin+window.location.pathname+'?seller='+code;
+  sellerLinks[code]={name:n,phone:p};saveAll();
+  document.getElementById('linkText').innerText=link;document.getElementById('generatedLink').classList.remove('hidden');
+}
+function copyLink(){navigator.clipboard.writeText(document.getElementById('linkText').innerText);alert('Link copied! Send am to seller for WhatsApp');}
+function submitSeller(){
+  let n=document.getElementById('regName').value;let ph=document.getElementById('regPhone').value;let t=document.getElementById('idType').value;let num=document.getElementById('idNumber').value;let err=document.getElementById('sellerError');
+  if(!n||!ph||!t||!num){err.innerText='❌ You MUST fill name + phone + choose BVN or NIN + put number';return;}
+  if(num.length!==11 || !/^\d+$/.test(num)){err.innerText='❌ BVN / NIN must be 11 digits only. Check am well.';return;}
+  // Basic BVN/NIN format check - Real verification needs VerifyMe/Smile Identity API
+  let id = Date.now().toString();
+  pending.push({id:id, name:n, phone:ph, idType:t, idNumber:num, status:'PENDING'});
+  saveAll();
+  err.style.color='green';err.innerText='✅ Submitted! Admin go check your '+t+' and approve you. Wait for approval.';
+}
+function renderSellers(){
+  let pList=document.getElementById('pendingList');
+  if(pending.length===0){pList.innerHTML='No pending seller yet.';}
+  else{
+    pList.innerHTML = pending.map(s=>`<div class="sellerRow"><b>${s.name}</b> - ${s.phone}<br>${s.idType}: ${s.idNumber} - <span style="color:#facc15">${s.status}</span><br><button class="btn-green" onclick="approveSeller('${s.id}')">✅ APPROVE</button> <button class="btn-red" onclick="rejectSeller('${s.id}')">❌ REJECT</button></div>`).join('');
+  }
+  let aList=document.getElementById('approvedList');
+  if(approved.length===0){aList.innerHTML='No approved seller yet.';}
+  else{
+    aList.innerHTML = approved.map(s=>`<div class="sellerRow"><b>${s.name}</b> - ${s.phone}<br>${s.idType}: ${s.idNumber} - <span style="color:#22c55e">APPROVED ✅</span><br><button class="btn-red" onclick="removeSeller('${s.id}')">Remove Seller</button></div>`).join('');
+  }
+}
+function approveSeller(id){
+  let idx=pending.findIndex(s=>s.id===id);if(idx===-1)return;
+  let s=pending.splice(idx,1)[0];s.status='APPROVED';approved.push(s);saveAll();
+  alert('✅ '+s.name+' don approve! E fit sell now. Send am message.');
+}
+function rejectSeller(id){
+  let idx=pending.findIndex(s=>s.id===id);if(idx===-1)return;
+  let s=pending.splice(idx,1)[0];saveAll();
+  alert('❌ '+s.name+' don reject. BVN/NIN no correct or fake.');
+}
+function removeSeller(id){
+  approved=approved.filter(s=>s.id!==id);saveAll();alert('Seller don remove.');
+}
+renderSellers();
+let params=new URLSearchParams(window.location.search);
+if(params.get('seller')){
+  let code=params.get('seller');
+  if(sellerLinks[code]){document.getElementById('sellerBox').classList.remove('hidden');document.getElementById('sellerBox').scrollIntoView();}
+  else{alert('This seller link no valid. Only Admin fit give link.');}
+}
+</script>
+</body>
+</html>
