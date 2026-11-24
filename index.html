@@ -152,4 +152,32 @@ TOP
 Part 1 - Header, Menu, Banner, Products
 Part 2 - Sign In box, Seller box, Admin box
 FIX - Buttons wey make am open
-BOTTOM - </body>
+BOTTOM - </body><script>
+// FINAL FIX - make Continue button work
+function userLogin(){
+  try{
+    var nEl=document.getElementById("uName");
+    var eEl=document.getElementById("uEmail");
+    var pEl=document.getElementById("uPass");
+    var n=nEl?nEl.value:"";
+    var e=eEl?eEl.value:"";
+    var p=pEl?pEl.value:"";
+    if(!e){alert("Please put your email or phone");return}
+    if(!p){alert("Please put your password");return}
+    if(!n){n=e.split("@")[0]}
+    var u={name:n,email:e};
+    localStorage.setItem("jm_user",JSON.stringify(u));
+    var b=document.getElementById("userBtn");
+    if(b){b.innerHTML="Hi, "+n.split(" ")[0]}
+    var m=document.getElementById("userMsg");
+    if(m){m.innerHTML="Welcome "+n+"! You fit buy now."}
+    alert("Welcome "+n+"! You don sign in.");
+    var modal=document.getElementById("userModal");
+    if(modal){modal.className="modal"}
+  }catch(err){alert("Error: "+err.message)}
+}
+function forgotPass(){
+  var e=prompt("Enter your email or phone for reset:");
+  if(e){alert("Reset link go be sent to "+e+" after Supabase setup. For now use same password to login.")}
+}
+</script>
