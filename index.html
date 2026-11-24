@@ -24,8 +24,7 @@ h2{font-size:26px;padding:6px 4px}
 .card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);padding-bottom:12px}
 .card img{width:100%;height:150px;object-fit:cover}
 .card div{padding:10px 12px}
-.card b{font-size:18px}
-.card small{color:#666;font-size:15px}
+.card b{font-size:18px}.card small{color:#666;font-size:15px}
 .card .price{color:#ff6a00;font-weight:900;font-size:20px;margin:6px 0}
 .card button{width:100%;background:#ff6a00;color:#fff;border:0;padding:14px;border-radius:12px;font-weight:800;font-size:17px;cursor:pointer}
 .card .del{background:#fff;color:#e00;border:1px solid #e00;margin-top:6px}
@@ -34,13 +33,11 @@ h2{font-size:26px;padding:6px 4px}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:10px;z-index:99}
 .modal.open{display:flex}
 .mbox{background:#fff;width:94%;max-width:480px;padding:24px;border-radius:18px;max-height:92vh;overflow-y:auto}
-.mbox h2{font-size:26px;margin-bottom:8px}
-.mbox p{font-size:16px;color:#555;margin-bottom:12px}
+.mbox h2{font-size:26px;margin-bottom:8px}.mbox p{font-size:16px;color:#555;margin-bottom:12px}
 .mbox input,.mbox select,.mbox textarea{width:100%;padding:15px;border:1px solid #ddd;border-radius:12px;font-size:17px;margin:8px 0}
 .mbox button{width:100%;background:#ff6a00;color:#fff;border:0;padding:16px;border-radius:12px;font-weight:800;font-size:18px;margin-top:10px;cursor:pointer}
 .mbox .link{background:none;color:#ff6a00;font-size:16px;padding:8px}
 .mbox .sec{background:#fff7ed;border:1px dashed #ff6a00;border-radius:12px;padding:14px;margin:10px 0}
-.mbox .sec b{font-size:18px}
 .close{float:right;font-size:24px;cursor:pointer}
 .order{border:1px solid #eee;border-radius:12px;padding:12px;margin:8px 0}
 .badge{padding:4px 10px;border-radius:20px;font-size:14px;font-weight:800}
@@ -48,116 +45,97 @@ h2{font-size:26px;padding:6px 4px}
 </style>
 </head>
 <body>
-
-<header>
-  <b>JOKER <span>MARKET</span></b>
-  <button id="userBtn" onclick="openUser()">Sign In</button>
-</header>
-
-<div class="banner">
-  <h1>Shop Smart,<br>Live Better</h1>
-  <p>All payments go through Joker Market Admin for safety.<br>Browse without an account. Sign in to checkout.</p>
-  <button onclick="openSeller()">Start Selling →</button>
-  <button onclick="openOrders()">My Orders</button>
-</div>
-
+<header><b>JOKER <span>MARKET</span></b><button id="userBtn">Sign In</button></header>
+<div class="banner"><h1>Shop Smart,<br>Live Better</h1><p>All payments go through Joker Market Admin for safety.<br>Browse without an account. Sign in to checkout.</p><button id="sellBtn">Start Selling →</button><button id="ordersBtn">My Orders</button></div>
 <h2>Shop Products</h2>
-<div class="search"><input id="searchInput" placeholder="Search products..." oninput="render()"><button onclick="render()">Search</button></div>
-<div class="cats"><button onclick="setCat('All')">All</button><button onclick="setCat('Shoes')">Shoes</button><button onclick="setCat('Phones')">Phones</button><button onclick="setCat('Clothes')">Clothes</button></div>
+<div class="search"><input id="searchInput" placeholder="Search products..."><button id="searchBtn">Search</button></div>
+<div class="cats"><button data-cat="All">All</button><button data-cat="Shoes">Shoes</button><button data-cat="Phones">Phones</button><button data-cat="Clothes">Clothes</button></div>
 <div id="grid"></div>
-<div class="bottom"><button onclick="openCart()">🛒 View Cart (<span id="cartCount">0</span>)</button></div>
+<div class="bottom"><button id="cartBtn">🛒 View Cart (<span id="cartCount">0</span>)</button></div>
 
-<!-- SIGN IN -->
-<div id="userModal" class="modal"><div class="mbox">
-<span class="close" onclick="closeModal('userModal')">×</span>
-<h2>Sign In</h2><p id="userMsg">Welcome! Please sign in to continue.</p>
-<input id="uName" placeholder="Full Name"><input id="uEmail" placeholder="Email or Phone"><input id="uPass" type="password" placeholder="Password">
-<button onclick="userLogin()">Continue with Email / Phone</button>
-<button class="link" onclick="forgotPass()">Forgot Password?</button>
-<button class="link" onclick="doLogout()">Log Out</button>
-</div></div>
-
-<!-- SELLER -->
-<div id="sellerModal" class="modal"><div class="mbox">
-<span class="close" onclick="closeModal('sellerModal')">×</span>
-<h2>Become a Seller</h2><p>Add your product. It will appear in the shop now.</p>
-<input id="pName" placeholder="Product Name"><input id="pPrice" type="number" placeholder="Price (₦)">
-<select id="pCat"><option>Shoes</option><option>Phones</option><option>Clothes</option><option>All</option></select>
-<input id="pImg" placeholder="Image Link (optional)"><button onclick="addSellerProduct()">Add Product</button>
-</div></div>
-
-<!-- CART -->
-<div id="cartModal" class="modal"><div class="mbox">
-<span class="close" onclick="closeModal('cartModal')">×</span>
-<h2>Your Cart</h2><div id="cartItems"></div><h3 id="cartTotal"></h3><button onclick="openCheckout()">Proceed to Checkout →</button>
-</div></div>
-
-<!-- CHECKOUT + ADMIN PAYMENT -->
-<div id="checkoutModal" class="modal"><div class="mbox">
-<span class="close" onclick="closeModal('checkoutModal')">×</span>
-<h2>Checkout - Pay to Admin</h2>
-<p>All payments go through Admin for safety. Seller will be paid after delivery.</p>
-<input id="cName" placeholder="Full Name"><input id="cPhone" placeholder="Phone Number"><textarea id="cAddr" placeholder="Delivery Address"></textarea>
-<select id="payMethod"><option>Bank Transfer to Admin</option><option>Pay on Delivery (Admin Collects)</option></select>
-<div class="sec">
-<b>🏦 PAY TO ADMIN ACCOUNT</b><br><br>
-Bank: <b id="adminBank">OPay</b><br>
-Account Name: <b id="adminName">JOKER MARKET</b><br>
-Account Number: <b id="adminNum">8023456789</b><br><br>
-<button onclick="copyAccount()">Copy Account Number</button>
-<p style="font-size:14px;margin-top:8px">⚠️ Do NOT pay seller directly. Pay only to this Admin account. Send receipt after payment.</p>
-</div>
-<input id="payRef" placeholder="Payment Reference / Sender Name (e.g. John - 25k)">
-<h3 id="checkoutTotal"></h3>
-<button onclick="placeOrder()">I Have Paid - Place Order</button>
-</div></div>
-
-<!-- ORDERS -->
-<div id="ordersModal" class="modal"><div class="mbox">
-<span class="close" onclick="closeModal('ordersModal')">×</span>
-<h2>My Orders</h2><div id="ordersList"></div>
-<p style="font-size:14px">Admin: To confirm a payment, tap Confirm on the order after you see the money in your bank.</p>
-</div></div>
+<div id="userModal" class="modal"><div class="mbox"><span class="close" data-close="userModal">×</span><h2>Sign In</h2><p id="userMsg">Welcome! Please sign in to continue.</p><input id="uName" placeholder="Full Name"><input id="uEmail" placeholder="Email or Phone"><input id="uPass" type="password" placeholder="Password"><button id="loginBtn">Continue with Email / Phone</button><button class="link" id="forgotBtn">Forgot Password?</button><button class="link" id="logoutBtn">Log Out</button></div></div>
+<div id="sellerModal" class="modal"><div class="mbox"><span class="close" data-close="sellerModal">×</span><h2>Become a Seller</h2><p>Add your product. It will appear in the shop now.</p><input id="pName" placeholder="Product Name"><input id="pPrice" type="number" placeholder="Price (₦)"><select id="pCat"><option>Shoes</option><option>Phones</option><option>Clothes</option><option>All</option></select><input id="pImg" placeholder="Image Link (optional)"><button id="addProdBtn">Add Product</button></div></div>
+<div id="cartModal" class="modal"><div class="mbox"><span class="close" data-close="cartModal">×</span><h2>Your Cart</h2><div id="cartItems"></div><h3 id="cartTotal"></h3><button id="checkoutBtn">Proceed to Checkout →</button></div></div>
+<div id="checkoutModal" class="modal"><div class="mbox"><span class="close" data-close="checkoutModal">×</span><h2>Checkout - Pay to Admin</h2><p>All payments go through Admin for safety. Seller will be paid after delivery.</p><input id="cName" placeholder="Full Name"><input id="cPhone" placeholder="Phone Number"><textarea id="cAddr" placeholder="Delivery Address"></textarea><select id="payMethod"><option>Bank Transfer to Admin</option><option>Pay on Delivery (Admin Collects)</option></select><div class="sec"><b>🏦 PAY TO ADMIN ACCOUNT</b><br><br>Bank: <b id="adminBank">OPay</b><br>Account Name: <b id="adminName">JOKER MARKET</b><br>Account Number: <b id="adminNum">8023456789</b><br><br><button id="copyBtn">Copy Account Number</button><p style="font-size:14px;margin-top:8px">⚠️ Do NOT pay seller directly. Pay only to this Admin account.</p></div><input id="payRef" placeholder="Payment Reference / Sender Name"><h3 id="checkoutTotal"></h3><button id="placeOrderBtn">I Have Paid - Place Order</button></div></div>
+<div id="ordersModal" class="modal"><div class="mbox"><span class="close" data-close="ordersModal">×</span><h2>My Orders</h2><div id="ordersList"></div><p style="font-size:14px">Admin: Tap Confirm on the order after you see the money in your bank.</p></div></div>
 
 <script>
-// ======== CHANGE YOUR ADMIN ACCOUNT HERE ONLY ========
-const ADMIN_BANK = "OPay"; // <-- Change to your bank: e.g. GTB, First Bank, Palmpay
-const ADMIN_NAME = "JOKER MARKET"; // <-- Change to your account name
-const ADMIN_NUM  = "8023456789"; // <-- Change to your real account number
-const ADMIN_WHATSAPP = "2348023456789"; // <-- Change to your WhatsApp number for receipt
-// =====================================================
-
-document.getElementById("adminBank").innerText=ADMIN_BANK;
-document.getElementById("adminName").innerText=ADMIN_NAME;
-document.getElementById("adminNum").innerText=ADMIN_NUM;
-
-let cat="All";
-let products=JSON.parse(localStorage.getItem("jm_products")||"null");
-if(!products){products=[
-{id:1,name:"Men's Sneakers",price:25000,cat:"Shoes",seller:"Joker Store",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"},
-{id:2,name:"iPhone 13",price:450000,cat:"Phones",seller:"Joker Store",img:"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400"},
-{id:3,name:"Men's T-Shirt",price:8000,cat:"Clothes",seller:"Joker Store",img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400"}
-];localStorage.setItem("jm_products",JSON.stringify(products));}
-let cart=JSON.parse(localStorage.getItem("jm_cart")||"[]");
-let orders=JSON.parse(localStorage.getItem("jm_orders")||"[]");
-
-function setCat(c){cat=c;render()}
+// ===== CHANGE YOUR ADMIN ACCOUNT HERE ONLY =====
+var ADMIN_BANK="OPay";
+var ADMIN_NAME="JOKER MARKET";
+var ADMIN_NUM="8023456789";
+var ADMIN_WHATSAPP="2348023456789";
+// ===============================================
+var cat="All";
+var products=[];
+try{products=JSON.parse(localStorage.getItem("jm_products")||"[]")}catch(e){products=[]}
+if(!products||products.length===0){
+products=[{id:1,name:"Men's Sneakers",price:25000,cat:"Shoes",seller:"Joker Store",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"},{id:2,name:"iPhone 13",price:450000,cat:"Phones",seller:"Joker Store",img:"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400"},{id:3,name:"Men's T-Shirt",price:8000,cat:"Clothes",seller:"Joker Store",img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400"}];
+localStorage.setItem("jm_products",JSON.stringify(products));
+}
+var cart=[]; try{cart=JSON.parse(localStorage.getItem("jm_cart")||"[]")}catch(e){cart=[]}
+var orders=[]; try{orders=JSON.parse(localStorage.getItem("jm_orders")||"[]")}catch(e){orders=[]}
+function show(id){document.getElementById(id).classList.add("open")}
+function hide(id){document.getElementById(id).classList.remove("open")}
 function render(){
-let q=(document.getElementById("searchInput").value||"").toLowerCase();
-let list=products.filter(p=>(cat==="All"||p.cat===cat)&&(p.name.toLowerCase().includes(q)));
-let g=document.getElementById("grid");
+var q=(document.getElementById("searchInput").value||"").toLowerCase();
+var list=products.filter(function(p){return (cat==="All"||p.cat===cat)&&(p.name.toLowerCase().indexOf(q)!==-1)});
+var g=document.getElementById("grid");
 if(list.length===0){g.innerHTML="<p>No products found.</p>";return}
-g.innerHTML=list.map(p=>`<div class="card"><img src="${p.img}"><div><b>${p.name}</b><br><small>${p.seller} • ${p.cat}</small><div class="price">₦${p.price.toLocaleString()}</div><button onclick="addToCart(${p.id})">Add to Cart</button><button class="del" onclick="deleteProduct(${p.id})">Delete</button></div></div>`).join("");
+g.innerHTML=list.map(function(p){return '<div class="card"><img src="'+p.img+'"><div><b>'+p.name+'</b><br><small>'+p.seller+' • '+p.cat+'</small><div class="price">₦'+p.price.toLocaleString()+'</div><button onclick="addToCart('+p.id+')">Add to Cart</button><button class="del" onclick="deleteProduct('+p.id+')">Delete</button></div></div>'}).join("");
 document.getElementById("cartCount").innerText=cart.length;
 }
-function deleteProduct(id){if(!confirm("Delete this product?"))return;products=products.filter(p=>p.id!==id);localStorage.setItem("jm_products",JSON.stringify(products));render()}
-function addToCart(id){let p=products.find(x=>x.id===id);cart.push(p);localStorage.setItem("jm_cart",JSON.stringify(cart));render();alert(p.name+" added to cart successfully!")}
-function removeFromCart(i){cart.splice(i,1);localStorage.setItem("jm_cart",JSON.stringify(cart));openCart();render()}
+window.addToCart=function(id){var p=products.find(function(x){return x.id===id});cart.push(p);localStorage.setItem("jm_cart",JSON.stringify(cart));render();alert(p.name+" added to cart successfully!")};
+window.deleteProduct=function(id){if(!confirm("Delete this product?"))return;products=products.filter(function(p){return p.id!==id});localStorage.setItem("jm_products",JSON.stringify(products));render()};
+window.removeFromCart=function(i){cart.splice(i,1);localStorage.setItem("jm_cart",JSON.stringify(cart));openCart();render()};
 function openCart(){
-let total=cart.reduce((a,p)=>a+p.price,0);
-document.getElementById("cartItems").innerHTML=cart.length?cart.map((p,i)=>`<p>${p.name} - ₦${p.price.toLocaleString()} <button style="width:auto;padding:6px 10px;background:#e00" onclick="removeFromCart(${i})">Remove</button></p>`).join(""):"<p>Your cart is empty.</p>";
-document.getElementById("cartTotal").innerText=cart.length?"Total: ₦"+total.toLocaleString():"";
-document.getElementById("cartModal").className="modal open";
+var total=cart.reduce(function(a,p){return a+p.price},0);
+document.getElementById("cartItems").innerHTML=cart.length?cart.map(function(p,i){return '<p>'+p.name+' - ₦'+p.price.toLocaleString()+' <button style="width:auto;padding:6px 10px;background:#e00" onclick="removeFromCart('+i+')">Remove</button></p>'}).join(""):"<p>Your cart is empty.</p>";
+document.getElementById("cartTotal").innerText=cart.length?"Total: ₦"+total.toLocaleString():"";show("cartModal");
 }
-function openCheckout(){if(!cart.length){alert("Your cart is empty");return}closeModal("cartModal");let total=cart.reduce((a,p)=>a+p.price,0);document.getElementById("checkoutTotal").innerText="Total to Pay to Admin: ₦"+total.toLocaleString();document.getElementById
-if(!products||products.length===0){
+function openOrders(){
+var el=document.getElementById("ordersList");
+el.innerHTML=orders.length?orders.map(function(o,i){return '<div class="order"><b>Order #'+o.id+'</b> <span class="badge '+(o.status.indexOf("Pending")!==-1?"pend":"paid")+'">'+o.status+'</span><br><small>'+o.date+'</small><br>'+o.items+'<br><b>Total: ₦'+o.total.toLocaleString()+'</b><br>Pay Method: '+o.method+'<br>Ref: '+(o.ref||"-")+'<br>Delivery: '+o.addr+'<br>'+(o.status.indexOf("Pending")!==-1?'<button onclick="confirmOrder('+i+')">✅ Admin: Confirm Payment</button>':"")+'</div>'}).join(""):"<p>No orders yet.</p>";
+show("ordersModal");
+}
+window.confirmOrder=function(i){orders[i].status="Paid - Confirmed by Admin";localStorage.setItem("jm_orders",JSON.stringify(orders));alert("Payment confirmed!");openOrders()};
+// BUTTONS - NEW SYSTEM, MUST WORK
+document.getElementById("userBtn").addEventListener("click",function(){show("userModal")});
+document.getElementById("sellBtn").addEventListener("click",function(){var u=localStorage.getItem("jm_user");if(!u){alert("Please sign in first to become a seller");show("userModal");return}show("sellerModal")});
+document.getElementById("ordersBtn").addEventListener("click",openOrders);
+document.getElementById("cartBtn").addEventListener("click",openCart);
+document.getElementById("searchBtn").addEventListener("click",render);
+document.getElementById("searchInput").addEventListener("input",render);
+document.querySelectorAll("[data-cat]").forEach(function(b){b.addEventListener("click",function(){cat=b.getAttribute("data-cat");render()})});
+document.querySelectorAll("[data-close]").forEach(function(s){s.addEventListener("click",function(){hide(s.getAttribute("data-close"))})});
+document.getElementById("loginBtn").addEventListener("click",function(){
+var n=document.getElementById("uName").value,e=document.getElementById("uEmail").value,p=document.getElementById("uPass").value;
+if(!e){alert("Please enter your email or phone");return} if(!p){alert("Please enter your password");return} if(!n){n=e.split("@")[0]}
+localStorage.setItem("jm_user",JSON.stringify({name:n,email:e}));document.getElementById("userBtn").innerText="Hi, "+n.split(" ")[0];document.getElementById("userMsg").innerText="Welcome "+n+"! You can now shop.";alert("Welcome "+n+"! You have successfully signed in.");hide("userModal");
+});
+document.getElementById("forgotBtn").addEventListener("click",function(){var e=prompt("Enter your email or phone to reset your password:");if(e){alert("A reset link will be sent to "+e+" after setup.")}});
+document.getElementById("logoutBtn").addEventListener("click",function(){localStorage.removeItem("jm_user");document.getElementById("userBtn").innerText="Sign In";alert("You have been logged out successfully.");hide("userModal")});
+document.getElementById("addProdBtn").addEventListener("click",function(){
+var n=document.getElementById("pName").value,pr=Number(document.getElementById("pPrice").value),c=document.getElementById("pCat").value,img=document.getElementById("pImg").value||"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400";
+if(!n||!pr){alert("Please enter the product name and price");return}
+var u=JSON.parse(localStorage.getItem("jm_user")||'{"name":"Seller"}');products.push({id:Date.now(),name:n,price:pr,cat:c,seller:u.name,img:img});localStorage.setItem("jm_products",JSON.stringify(products));alert("Product added successfully!");hide("sellerModal");render();
+});
+document.getElementById("checkoutBtn").addEventListener("click",function(){if(!cart.length){alert("Your cart is empty");return}hide("cartModal");var total=cart.reduce(function(a,p){return a+p.price},0);document.getElementById("checkoutTotal").innerText="Total to Pay to Admin: ₦"+total.toLocaleString();show("checkoutModal")});
+document.getElementById("copyBtn").addEventListener("click",function(){navigator.clipboard.writeText(ADMIN_NUM);alert("Account Number Copied: "+ADMIN_NUM+" - "+ADMIN_BANK+" - "+ADMIN_NAME)});
+document.getElementById("placeOrderBtn").addEventListener("click",function(){
+var n=document.getElementById("cName").value,ph=document.getElementById("cPhone").value,ad=document.getElementById("cAddr").value,ref=document.getElementById("payRef").value,method=document.getElementById("payMethod").value;
+if(!n||!ph||!ad){alert("Please enter your name, phone and delivery address");return}
+if(method.indexOf("Bank")!==-1&&!ref){alert("Please enter your Payment Reference / Sender Name after transfer");return}
+var total=cart.reduce(function(a,p){return a+p.price},0);
+var order={id:Date.now(),items:cart.map(function(p){return p.name}).join(", "),total:total,name:n,phone:ph,addr:ad,ref:ref,method:method,status:"Pending - Waiting for Admin Confirmation",date:new Date().toLocaleString()};
+orders.push(order);localStorage.setItem("jm_orders",JSON.stringify(orders));cart=[];localStorage.setItem("jm_cart",JSON.stringify(cart));render();hide("checkoutModal");
+alert("Order placed! Total ₦"+total.toLocaleString()+" Pay to Admin: "+ADMIN_BANK+" "+ADMIN_NUM+" ("+ADMIN_NAME+")");
+var msg="Hello Joker Market, I just placed an order. Name: "+n+", Total: ₦"+total+", Ref: "+ref+", Address: "+ad;window.open("https://wa.me/"+ADMIN_WHATSAPP+"?text="+encodeURIComponent(msg),"_blank");openOrders();
+});
+document.getElementById("adminBank").innerText=ADMIN_BANK;document.getElementById("adminName").innerText=ADMIN_NAME;document.getElementById("adminNum").innerText=ADMIN_NUM;
+var u2=null; try{u2=JSON.parse(localStorage.getItem("jm_user")||"null")}catch(e){}
+if(u2){document.getElementById("userBtn").innerText="Hi, "+u2.name.split(" ")[0]}
+render();
+</script>
+</body>
+</html>
