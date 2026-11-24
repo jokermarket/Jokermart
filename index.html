@@ -1,256 +1,162 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JOKER MARKET</title>
+<title>Joker Market - Shop Smart, Live Better</title>
 <style>
-body{margin:0;font-family:Arial;background:#fff5ef}
-header{background:#ff6a00;color:#fff;padding:12px;position:sticky;top:0;z-index:10}
-.top{display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:22px;font-weight:900;cursor:pointer}
-.logo span{background:#fff;color:#111;padding:2px 7px;border-radius:6px}
-.ham{font-size:24px;background:#111;color:#fff;border:0;border-radius:8px;padding:6px 10px}
-.search{margin-top:10px;background:#fff;border-radius:20px;display:flex;overflow:hidden}
-.search input{flex:1;border:0;padding:11px;outline:0}
-.search button{background:#111;color:#fff;border:0;padding:0 15px}
-.menu{position:fixed;top:0;left:-260px;width:240px;height:100%;background:#111;color:#fff;z-index:99;padding:16px;transition:.3s;overflow:auto}
-.menu.open{left:0}
-.menu a{display:block;color:#fff;text-decoration:none;padding:12px 8px;border-bottom:1px solid #333;font-weight:700}
-.menu button{width:100%;padding:10px;border:0;border-radius:8px;margin-top:12px;background:#ff6a00;color:#fff;font-weight:800}
-.banner{background:#ff9a3d;color:#fff;margin:12px;border-radius:16px;padding:18px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px}
-.card{background:#fff;border-radius:14px;overflow:hidden}
-.card img{width:100%;height:140px;object-fit:cover}
-.card div{padding:10px}
-.card button{width:100%;padding:9px;border:0;border-radius:8px;background:#ff6a00;color:#fff;font-weight:800;margin-top:4px}
-.cat{display:flex;gap:8px;overflow:auto;padding:0 12px}
-.cat button{background:#fff;color:#ff6a00;border:0;padding:7px 14px;border-radius:20px;font-weight:700;white-space:nowrap}
-.cat button.on{background:#111;color:#fff}
-.box{background:#fff;margin:12px;border-radius:14px;padding:14px}
-.box input,.box select,.box textarea{width:100%;padding:11px;margin:6px 0;border:1px solid #ddd;border-radius:10px;box-sizing:border-box}
-.box button{width:100%;padding:12px;border:0;border-radius:10px;font-weight:800;margin-top:6px}
-.o{background:#ff6a00;color:#fff}.d{background:#111;color:#fff}.g{background:#fff;color:#111;border:1px solid #ddd!important}.fb{background:#1877F2;color:#fff}
-.modal{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:none;z-index:100;padding:15px;overflow:auto}
-.modal.open{display:block}
-.mbox{background:#fff;border-radius:16px;padding:16px;max-width:520px;margin:20px auto}
-footer{background:#111;color:#fff;text-align:center;padding:18px}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#fff7ed;font-size:18px;line-height:1.6;padding:0 12px;overflow-x:hidden}
+header{background:#fff;display:flex;justify-content:space-between;align-items:center;padding:14px 10px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+header b{font-size:24px} header b span{color:#ff6a00}
+header button{background:#ff6a00;color:#fff;border:0;padding:12px 16px;border-radius:20px;font-weight:800;font-size:16px;cursor:pointer}
+.banner{background:linear-gradient(135deg,#ff6a00,#ff9a3d);color:#fff;text-align:center;padding:28px 16px;border-radius:16px;margin:14px 0}
+.banner h1{font-size:32px;line-height:1.2}
+.banner p{font-size:17px;margin:10px 0 16px}
+.banner button{background:#fff;color:#ff6a00;border:0;padding:16px 22px;border-radius:24px;font-weight:800;font-size:18px;cursor:pointer;margin:4px}
+h2{font-size:26px;padding:6px 4px}
+.search{display:flex;gap:8px;margin:10px 0}
+.search input{flex:1;padding:15px;border:2px solid #ffe0c2;border-radius:12px;font-size:17px}
+.search button{background:#111;color:#fff;border:0;padding:14px 18px;border-radius:12px;font-size:17px}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:6px 0}
+.cats button{white-space:nowrap;background:#fff;border:1px solid #ffd9b8;padding:10px 16px;border-radius:20px;font-size:16px;cursor:pointer}
+#grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);padding-bottom:12px}
+.card img{width:100%;height:150px;object-fit:cover}
+.card div{padding:10px 12px}
+.card b{font-size:18px}
+.card small{color:#666;font-size:15px}
+.card .price{color:#ff6a00;font-weight:900;font-size:20px;margin:6px 0}
+.card button{width:100%;background:#ff6a00;color:#fff;border:0;padding:14px;border-radius:12px;font-weight:800;font-size:17px;cursor:pointer}
+.card .del{background:#fff;color:#e00;border:1px solid #e00;margin-top:6px}
+.bottom{text-align:center;padding:12px}
+.bottom button{background:#111;color:#fff;border:0;padding:16px 20px;border-radius:20px;font-weight:800;font-size:18px;cursor:pointer;margin:4px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:10px;z-index:99}
+.modal.open{display:flex}
+.mbox{background:#fff;width:94%;max-width:480px;padding:24px;border-radius:18px;max-height:92vh;overflow-y:auto}
+.mbox h2{font-size:26px;margin-bottom:8px}
+.mbox p{font-size:16px;color:#555;margin-bottom:12px}
+.mbox input,.mbox select,.mbox textarea{width:100%;padding:15px;border:1px solid #ddd;border-radius:12px;font-size:17px;margin:8px 0}
+.mbox button{width:100%;background:#ff6a00;color:#fff;border:0;padding:16px;border-radius:12px;font-weight:800;font-size:18px;margin-top:10px;cursor:pointer}
+.mbox .link{background:none;color:#ff6a00;font-size:16px;padding:8px}
+.mbox .sec{background:#fff7ed;border:1px dashed #ff6a00;border-radius:12px;padding:14px;margin:10px 0}
+.mbox .sec b{font-size:18px}
+.close{float:right;font-size:24px;cursor:pointer}
+.order{border:1px solid #eee;border-radius:12px;padding:12px;margin:8px 0}
+.badge{padding:4px 10px;border-radius:20px;font-size:14px;font-weight:800}
+.pend{background:#fff3cd;color:#856404}.paid{background:#d4edda;color:#155724}
 </style>
 </head>
 <body>
-<div class="menu" id="menu">
-<h3>JOKER MARKET</h3>
-<a href="#" onclick="goHome()">🏠 Home</a>
-<a href="#" onclick="goHome()">🛍️ Shop</a>
-<a href="#" onclick="openUser()">👤 My Account</a>
-<a href="#" onclick="openSeller()">🏪 Seller Centre</a>
-<a href="#" onclick="openAdminAsk()">🔐 Admin Dashboard</a>
-<a href="#" onclick="openMembers()">👥 Members</a>
-<a href="#" onclick="copyMarketLink()">🔗 Market Link</a>
-<a href="#" onclick="openReviews()">⭐ Reviews</a>
-<a href="#" onclick="userLogout()">🚪 Logout</a>
-<button onclick="closeMenu()">Close Menu</button>
-</div>
 
 <header>
-<div class="top">
-<button class="ham" onclick="openMenu()">☰</button>
-<div class="logo" onclick="tapLogo()">JOKER <span>MARKET</span></div>
-<button id="userBtn" onclick="openUser()" style="background:#111;color:#fff;border:0;padding:8px 12px;border-radius:20px;font-weight:800">👤 Sign In</button>
-</div>
-<div class="search"><input id="topSearch" placeholder="Search clothes, shoes, phones..."><button onclick="render()">Search</button></div>
+  <b>JOKER <span>MARKET</span></b>
+  <button id="userBtn" onclick="openUser()">Sign In</button>
 </header>
 
-<div class="banner"><h1>Shop Smart, Live Better</h1><p>Real sellers - Home delivery - Secure payment</p>
-<button onclick="openUser()" style="background:#fff;color:#ff6a00;border:0;padding:11px 18px;border-radius:20px;font-weight:900">👤 Sign In to Shop →</button>
-<button onclick="openSeller()" style="background:#111;color:#fff;border:0;padding:11px 18px;border-radius:20px;font-weight:900;margin-left:6px">Start Selling</button>
+<div class="banner">
+  <h1>Shop Smart,<br>Live Better</h1>
+  <p>All payments go through Joker Market Admin for safety.<br>Browse without an account. Sign in to checkout.</p>
+  <button onclick="openSeller()">Start Selling →</button>
+  <button onclick="openOrders()">My Orders</button>
 </div>
 
-<div class="cat" id="nav"></div>
-<h2 style="padding:0 12px">Shop Products</h2>
-<div class="grid" id="grid"></div>
-<div id="emptyMsg" style="text-align:center;padding:30px"><h3>No products yet</h3><p>Be the first seller to add product.</p><button onclick="openSeller()" style="background:#ff6a00;color:#fff;border:0;padding:12px 20px;border-radius:20px;font-weight:800">Become a Seller</button></div>
-<div style="text-align:center;padding:12px"><button onclick="openUser()" style="background:#ff6a00;color:#fff;border:0;padding:12px 20px;border-radius:20px;font-weight:800;margin-right:6px">👤 Sign In</button><button onclick="openCart()" style="background:#111;color:#fff;border:0;padding:12px 20px;border-radius:20px;font-weight:800">View Cart (<span id="cartCount">0</span>)</button></div>
+<h2>Shop Products</h2>
+<div class="search"><input id="searchInput" placeholder="Search products..." oninput="render()"><button onclick="render()">Search</button></div>
+<div class="cats"><button onclick="setCat('All')">All</button><button onclick="setCat('Shoes')">Shoes</button><button onclick="setCat('Phones')">Phones</button><button onclick="setCat('Clothes')">Clothes</button></div>
+<div id="grid"></div>
+<div class="bottom"><button onclick="openCart()">🛒 View Cart (<span id="cartCount">0</span>)</button></div>
 
-<!--AUTH MODAL-->
-<div class="modal" id="userModal"><div class="mbox">
-<h2>👤 Welcome to JOKER MARKET</h2><p style="color:#666;font-size:13px">Sign in to buy, sell and track orders. Browse without account, sign in to checkout.</p>
-<button class="g" onclick="loginGoogle()">G &nbsp; Continue with Google</button>
-<button class="fb" onclick="loginFacebook()">f &nbsp; Continue with Facebook</button>
-<hr>
-<input id="uName" placeholder="Full name (for new account)">
-<input id="uEmail" placeholder="Email or Phone e.g. you@gmail.com / 090...">
-<input id="uPass" type="password" placeholder="Password">
-<button class="o" onclick="userLogin()">Continue with Email / Phone</button>
-<p><a href="#" onclick="forgotPass()">Forgot Password?</a></p>
-<p id="userMsg" style="color:green;font-weight:700"></p>
-<button onclick="closeUser()">Close</button>
+<!-- SIGN IN -->
+<div id="userModal" class="modal"><div class="mbox">
+<span class="close" onclick="closeModal('userModal')">×</span>
+<h2>Sign In</h2><p id="userMsg">Welcome! Please sign in to continue.</p>
+<input id="uName" placeholder="Full Name"><input id="uEmail" placeholder="Email or Phone"><input id="uPass" type="password" placeholder="Password">
+<button onclick="userLogin()">Continue with Email / Phone</button>
+<button class="link" onclick="forgotPass()">Forgot Password?</button>
+<button class="link" onclick="doLogout()">Log Out</button>
 </div></div>
 
-<!--SELLER MODAL-->
-<div class="modal" id="sellerModal"><div class="mbox">
-<h2>🏪 Seller Centre</h2>
-<p style="font-size:13px;color:#666">Register as seller. After approval, your products go live.</p>
-<input id="sShop" placeholder="Shop / Store name">
-<input id="sName" placeholder="Your full name">
-<input id="sPhone" placeholder="Phone number">
-<input id="sLoc" placeholder="Your location e.g. Lagos, Ikeja">
-<input id="pName" placeholder="Product name">
-<input id="pPrice" type="number" placeholder="Price ₦">
-<select id="pCat"><option>Clothes</option><option>Shoes</option><option>Phones</option><option>Accessories</option><option>Home products</option></select>
-<input id="pImg" placeholder="Product image link">
-<textarea id="pDesc" placeholder="Product description"></textarea>
-<button class="o" onclick="addSellerProduct()">Add Product / Apply as Seller</button>
-<p id="sMsg" style="color:green"></p>
-<button onclick="closeSeller()">Close</button>
+<!-- SELLER -->
+<div id="sellerModal" class="modal"><div class="mbox">
+<span class="close" onclick="closeModal('sellerModal')">×</span>
+<h2>Become a Seller</h2><p>Add your product. It will appear in the shop now.</p>
+<input id="pName" placeholder="Product Name"><input id="pPrice" type="number" placeholder="Price (₦)">
+<select id="pCat"><option>Shoes</option><option>Phones</option><option>Clothes</option><option>All</option></select>
+<input id="pImg" placeholder="Image Link (optional)"><button onclick="addSellerProduct()">Add Product</button>
 </div></div>
 
-<!--ADMIN MODAL-->
-<div class="modal" id="adminModal"><div class="mbox">
-<div id="loginBox"><h2>🔐 Admin Dashboard</h2><p>Only authorized admin.</p>
-<input id="pass" type="password" placeholder="Admin password" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:10px">
-<button class="d" onclick="loginAdmin()">Login</button><button onclick="closeAdmin()">Close</button><p style="font-size:12px;color:#888">Demo password: admin123 - Change in Supabase later</p></div>
-<div id="adminBox" style="display:none"><h2>Admin Dashboard - Real Data</h2>
-<p>Products: <b id="nP">0</b> | Orders: <b id="nO">0</b> | Members: <b id="nM">0</b> | Sellers: <b id="nS">0</b></p>
-<p>Visitors: <b id="nV">0</b> | Reviews: <b id="nR">0</b> | Complaints: <b id="nC">0</b></p>
-<div class="box"><h3>All Products</h3><div id="allP"></div></div>
-<div class="box"><h3>All Orders</h3><div id="ordList"></div></div>
-<button class="d" onclick="logoutAdmin()">Logout</button><button onclick="closeAdmin()">Close</button></div>
+<!-- CART -->
+<div id="cartModal" class="modal"><div class="mbox">
+<span class="close" onclick="closeModal('cartModal')">×</span>
+<h2>Your Cart</h2><div id="cartItems"></div><h3 id="cartTotal"></h3><button onclick="openCheckout()">Proceed to Checkout →</button>
 </div></div>
 
-<!--OTHER MODALS-->
-<div class="modal" id="cartModal"><div class="mbox"><h2>Cart</h2><div id="cartItems"></div><h3 id="cartTotal">Total: ₦0</h3><p style="font-size:13px">Delivery address go be asked at checkout in Phase 3.</p><button onclick="checkout()" style="width:100%;padding:13px;border:0;border-radius:10px;background:#25D366;color:#fff;font-weight:800">Proceed to Checkout (Login Required)</button><button onclick="closeCart()">Close</button></div></div>
-<div class="modal" id="infoModal"><div class="mbox"><h2 id="infoTitle">Info</h2><div id="infoBody"></div><button onclick="closeInfo()">Close</button></div></div>
+<!-- CHECKOUT + ADMIN PAYMENT -->
+<div id="checkoutModal" class="modal"><div class="mbox">
+<span class="close" onclick="closeModal('checkoutModal')">×</span>
+<h2>Checkout - Pay to Admin</h2>
+<p>All payments go through Admin for safety. Seller will be paid after delivery.</p>
+<input id="cName" placeholder="Full Name"><input id="cPhone" placeholder="Phone Number"><textarea id="cAddr" placeholder="Delivery Address"></textarea>
+<select id="payMethod"><option>Bank Transfer to Admin</option><option>Pay on Delivery (Admin Collects)</option></select>
+<div class="sec">
+<b>🏦 PAY TO ADMIN ACCOUNT</b><br><br>
+Bank: <b id="adminBank">OPay</b><br>
+Account Name: <b id="adminName">JOKER MARKET</b><br>
+Account Number: <b id="adminNum">8023456789</b><br><br>
+<button onclick="copyAccount()">Copy Account Number</button>
+<p style="font-size:14px;margin-top:8px">⚠️ Do NOT pay seller directly. Pay only to this Admin account. Send receipt after payment.</p>
+</div>
+<input id="payRef" placeholder="Payment Reference / Sender Name (e.g. John - 25k)">
+<h3 id="checkoutTotal"></h3>
+<button onclick="placeOrder()">I Have Paid - Place Order</button>
+</div></div>
 
-<footer><h3>JOKER MARKET</h3><p>Share: <button onclick="shareMarket('whatsapp')">WhatsApp</button> <button onclick="shareMarket('facebook')">Facebook</button> <button onclick="shareMarket('instagram')">Instagram</button> <button onclick="shareMarket('tiktok')">TikTok</button></p><p>© 2026 Joker Market - Shop Smart, Live Better</p></footer>
-<!--ADD PART2 HERE-->
-</body>
-</html>
+<!-- ORDERS -->
+<div id="ordersModal" class="modal"><div class="mbox">
+<span class="close" onclick="closeModal('ordersModal')">×</span>
+<h2>My Orders</h2><div id="ordersList"></div>
+<p style="font-size:14px">Admin: To confirm a payment, tap Confirm on the order after you see the money in your bank.</p>
+</div></div>
+
 <script>
-// FIX - make all buttons work even if IDs different
-function openMenu(){var m=document.getElementById("sideMenu")||document.getElementById("menu");if(m)m.className="menu open";else alert("Menu not found - Part 2 never saved")}
-function closeMenu(){var m=document.getElementById("sideMenu")||document.getElementById("menu");if(m)m.className="menu"}
-function openUser(){var m=document.getElementById("userModal");if(!m){alert("Sign In box not found - Part 2 never saved, check GitHub file");return}m.className="modal open"}
-function closeUser(){var m=document.getElementById("userModal");if(m)m.className="modal"}
-function openSeller(){var m=document.getElementById("sellerModal");if(!m){alert("Seller box not found - Part 2 never saved");return}m.className="modal open"}
-function closeSeller(){var m=document.getElementById("sellerModal");if(m)m.className="modal"}
-function openAdmin(){var m=document.getElementById("adminModal");if(!m){alert("Admin box not found");return}m.className="modal open"}
-function closeAdmin(){var m=document.getElementById("adminModal");if(m)m.className="modal"}
-function openCart(){var m=document.getElementById("cartModal");if(m)m.className="modal open"}
-function closeCart(){var m=document.getElementById("cartModal");if(m)m.className="modal"}
-function openInfo(){var m=document.getElementById("infoModal");if(m)m.className="modal open"}
-function closeInfo(){var m=document.getElementById("infoModal");if(m)m.className="modal"}
-function openMembers(){alert("Members: Total members go show after Supabase setup. For now Sign In to join.")}
-function openReviews(){alert("Reviews: No reviews yet. Write review go come in Phase 4.")}
-function copyMarketLink(){if(navigator.share){navigator.share({title:"JOKER MARKET",url:location.href})}else{prompt("Copy link:",location.href)}}
-function shareMarket(){copyMarketLink()}
-function goHome(){closeMenu();window.scrollTo(0,0)}
-function checkCart(){openCart()}
-function tapLogo(){goHome()}
-</script>
-TOP
-Part 1 - Header, Menu, Banner, Products
-Part 2 - Sign In box, Seller box, Admin box
-FIX - Buttons wey make am open
-BOTTOM - </body><script>
-// FINAL FIX - make Continue button work
-function userLogin(){
-  try{
-    var nEl=document.getElementById("uName");
-    var eEl=document.getElementById("uEmail");
-    var pEl=document.getElementById("uPass");
-    var n=nEl?nEl.value:"";
-    var e=eEl?eEl.value:"";
-    var p=pEl?pEl.value:"";
-    if(!e){alert("Please put your email or phone");return}
-    if(!p){alert("Please put your password");return}
-    if(!n){n=e.split("@")[0]}
-    var u={name:n,email:e};
-    localStorage.setItem("jm_user",JSON.stringify(u));
-    var b=document.getElementById("userBtn");
-    if(b){b.innerHTML="Hi, "+n.split(" ")[0]}
-    var m=document.getElementById("userMsg");
-    if(m){m.innerHTML="Welcome "+n+"! You fit buy now."}
-    alert("Welcome "+n+"! You don sign in.");
-    var modal=document.getElementById("userModal");
-    if(modal){modal.className="modal"}
-  }catch(err){alert("Error: "+err.message)}
-}
-function forgotPass(){
-  var e=prompt("Enter your email or phone for reset:");
-  if(e){alert("Reset link go be sent to "+e+" after Supabase setup. For now use same password to login.")}
-}
-</script><style>
-/* MAKE EVERYTHING BIG FOR PHONE */
-body{font-size:18px !important;line-height:1.6 !important}
-h1{font-size:32px !important;line-height:1.2 !important}
-h2{font-size:26px !important;line-height:1.3 !important}
-h3{font-size:22px !important}
-p,div,span,small{font-size:17px !important;line-height:1.5 !important}
-button{font-size:18px !important;padding:16px 20px !important;min-height:52px !important;border-radius:12px !important}
-input,select,textarea{font-size:17px !important;padding:15px !important;min-height:52px !important;border-radius:12px !important}
-.mbox{width:94% !important;max-width:480px !important;padding:24px !important;border-radius:18px !important;max-height:92vh !important;overflow-y:auto !important}
-.mbox h2{font-size:26px !important;margin-bottom:12px !important}
-.mbox input{margin:8px 0 !important}
-.mbox button{margin-top:10px !important}
-.modal{padding:10px !important}
-header{padding:14px 10px !important}
-header button{font-size:16px !important;padding:10px 14px !important}
-.card{padding:14px !important}
-.card b{font-size:18px !important}
-.card small{font-size:15px !important}
-</style><script>
-// ALL ENGLISH VERSION - overrides all Pidgin
-function userLogin(){
-  var n=(document.getElementById("uName")||{}).value||"";
-  var e=(document.getElementById("uEmail")||{}).value||"";
-  var p=(document.getElementById("uPass")||{}).value||"";
-  if(!e){alert("Please enter your email or phone");return}
-  if(!p){alert("Please enter your password");return}
-  if(!n){n=e.split("@")[0]}
-  var u={name:n,email:e};
-  localStorage.setItem("jm_user",JSON.stringify(u));
-  var b=document.getElementById("userBtn");if(b){b.innerHTML="Hi, "+n.split(" ")[0]}
-  var m=document.getElementById("userMsg");if(m){m.innerHTML="Welcome "+n+"! You can now shop."}
-  alert("Welcome "+n+"! You have successfully signed in.");
-  var modal=document.getElementById("userModal");if(modal){modal.className="modal"}
-}
-function forgotPass(){var e=prompt("Enter your email or phone to reset your password:");if(e){alert("A reset link will be sent to "+e+" after setup. For now, please use your current password to log in.")}}
-function doLogout(){localStorage.removeItem("jm_user");var b=document.getElementById("userBtn");if(b){b.innerHTML="Sign In"};closeMenu();alert("You have been logged out successfully.")}
-function openSeller(){closeMenu();if(!window.currentUser){try{window.currentUser=JSON.parse(localStorage.getItem("jm_user")||"null")}catch(e){}}if(!window.currentUser&&!localStorage.getItem("jm_user")){alert("Please sign in first to become a seller");openUser();return}var m=document.getElementById("sellerModal");if(m){m.className="modal open"}}
-function addSellerProduct(){
-  var n=(document.getElementById("pName")||{}).value||"";var pr=Number((document.getElementById("pPrice")||{}).value||0);
-  if(!n||!pr){alert("Please enter the product name and price");return}
-  alert("Product added successfully! It will appear in the shop now.");
-  try{var s=document.getElementById("sMsg");if(s){s.innerHTML="Product added successfully! It will appear in the shop now."}}catch(e){}
-}
-function checkout(){alert("Checkout with delivery address will be available in the next phase. Your cart has been saved.")}
+// ======== CHANGE YOUR ADMIN ACCOUNT HERE ONLY ========
+const ADMIN_BANK = "OPay"; // <-- Change to your bank: e.g. GTB, First Bank, Palmpay
+const ADMIN_NAME = "JOKER MARKET"; // <-- Change to your account name
+const ADMIN_NUM  = "8023456789"; // <-- Change to your real account number
+const ADMIN_WHATSAPP = "2348023456789"; // <-- Change to your WhatsApp number for receipt
+// =====================================================
 
-// Replace all Pidgin words on the page with English
-function makeEnglish(){
-  var map=[
-    ["You don sign in","You have signed in"],
-    ["You fit buy now","You can now shop"],
-    ["Please Sign In first","Please sign in first"],
-    ["E go show","It will appear"],
-    ["E go work","It will work"],
-    ["E go open","It will open"],
-    ["E go be sent","It will be sent"],
-    ["E dey saved","It has been saved"],
-    ["Sign In to Shop","Sign In to Shop"],
-    ["Start Selling","Start Selling"],
-    ["Become a Seller","Become a Seller"],
-    ["Be the first seller to add product","Be the first seller to add a product"],
-    ["Shop Smart, Live Better","Shop Smart, Live Better"],
-    ["Browse without account, sign in to checkout","Browse without an account. Sign in to checkout."],
-    ["Sign in to buy, sell and track orders","Sign in to buy, sell and track your orders."],
-    ["Continue with Email / Phone","Continue with Email / Phone"],
-    ["Forgot Password?","Forgot Password?"],
-    ["View Cart","View Cart"]
-  ];
-  var html=document.body.innerHTML;
-  for(var i=0;i<map.length;i++){html=html.split(map[i][0]).join(map[i][1])}
-  document.body.innerHTML=html;
+document.getElementById("adminBank").innerText=ADMIN_BANK;
+document.getElementById("adminName").innerText=ADMIN_NAME;
+document.getElementById("adminNum").innerText=ADMIN_NUM;
+
+let cat="All";
+let products=JSON.parse(localStorage.getItem("jm_products")||"null");
+if(!products){products=[
+{id:1,name:"Men's Sneakers",price:25000,cat:"Shoes",seller:"Joker Store",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"},
+{id:2,name:"iPhone 13",price:450000,cat:"Phones",seller:"Joker Store",img:"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400"},
+{id:3,name:"Men's T-Shirt",price:8000,cat:"Clothes",seller:"Joker Store",img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400"}
+];localStorage.setItem("jm_products",JSON.stringify(products));}
+let cart=JSON.parse(localStorage.getItem("jm_cart")||"[]");
+let orders=JSON.parse(localStorage.getItem("jm_orders")||"[]");
+
+function setCat(c){cat=c;render()}
+function render(){
+let q=(document.getElementById("searchInput").value||"").toLowerCase();
+let list=products.filter(p=>(cat==="All"||p.cat===cat)&&(p.name.toLowerCase().includes(q)));
+let g=document.getElementById("grid");
+if(list.length===0){g.innerHTML="<p>No products found.</p>";return}
+g.innerHTML=list.map(p=>`<div class="card"><img src="${p.img}"><div><b>${p.name}</b><br><small>${p.seller} • ${p.cat}</small><div class="price">₦${p.price.toLocaleString()}</div><button onclick="addToCart(${p.id})">Add to Cart</button><button class="del" onclick="deleteProduct(${p.id})">Delete</button></div></div>`).join("");
+document.getElementById("cartCount").innerText=cart.length;
 }
-window.addEventListener("load",function(){setTimeout(makeEnglish,500)});
-</script>
+function deleteProduct(id){if(!confirm("Delete this product?"))return;products=products.filter(p=>p.id!==id);localStorage.setItem("jm_products",JSON.stringify(products));render()}
+function addToCart(id){let p=products.find(x=>x.id===id);cart.push(p);localStorage.setItem("jm_cart",JSON.stringify(cart));render();alert(p.name+" added to cart successfully!")}
+function removeFromCart(i){cart.splice(i,1);localStorage.setItem("jm_cart",JSON.stringify(cart));openCart();render()}
+function openCart(){
+let total=cart.reduce((a,p)=>a+p.price,0);
+document.getElementById("cartItems").innerHTML=cart.length?cart.map((p,i)=>`<p>${p.name} - ₦${p.price.toLocaleString()} <button style="width:auto;padding:6px 10px;background:#e00" onclick="removeFromCart(${i})">Remove</button></p>`).join(""):"<p>Your cart is empty.</p>";
+document.getElementById("cartTotal").innerText=cart.length?"Total: ₦"+total.toLocaleString():"";
+document.getElementById("cartModal").className="modal open";
+}
+function openCheckout(){if(!cart.length){alert("Your cart is empty");return}closeModal("cartModal");let total=cart.reduce((a,p)=>a+p.price,0);document.getElementById("checkoutTotal").innerText="Total to Pay to Admin: ₦"+total.toLocaleString();document.getElementById
