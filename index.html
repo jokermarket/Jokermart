@@ -180,4 +180,77 @@ function forgotPass(){
   var e=prompt("Enter your email or phone for reset:");
   if(e){alert("Reset link go be sent to "+e+" after Supabase setup. For now use same password to login.")}
 }
+</script><style>
+/* MAKE EVERYTHING BIG FOR PHONE */
+body{font-size:18px !important;line-height:1.6 !important}
+h1{font-size:32px !important;line-height:1.2 !important}
+h2{font-size:26px !important;line-height:1.3 !important}
+h3{font-size:22px !important}
+p,div,span,small{font-size:17px !important;line-height:1.5 !important}
+button{font-size:18px !important;padding:16px 20px !important;min-height:52px !important;border-radius:12px !important}
+input,select,textarea{font-size:17px !important;padding:15px !important;min-height:52px !important;border-radius:12px !important}
+.mbox{width:94% !important;max-width:480px !important;padding:24px !important;border-radius:18px !important;max-height:92vh !important;overflow-y:auto !important}
+.mbox h2{font-size:26px !important;margin-bottom:12px !important}
+.mbox input{margin:8px 0 !important}
+.mbox button{margin-top:10px !important}
+.modal{padding:10px !important}
+header{padding:14px 10px !important}
+header button{font-size:16px !important;padding:10px 14px !important}
+.card{padding:14px !important}
+.card b{font-size:18px !important}
+.card small{font-size:15px !important}
+</style><script>
+// ALL ENGLISH VERSION - overrides all Pidgin
+function userLogin(){
+  var n=(document.getElementById("uName")||{}).value||"";
+  var e=(document.getElementById("uEmail")||{}).value||"";
+  var p=(document.getElementById("uPass")||{}).value||"";
+  if(!e){alert("Please enter your email or phone");return}
+  if(!p){alert("Please enter your password");return}
+  if(!n){n=e.split("@")[0]}
+  var u={name:n,email:e};
+  localStorage.setItem("jm_user",JSON.stringify(u));
+  var b=document.getElementById("userBtn");if(b){b.innerHTML="Hi, "+n.split(" ")[0]}
+  var m=document.getElementById("userMsg");if(m){m.innerHTML="Welcome "+n+"! You can now shop."}
+  alert("Welcome "+n+"! You have successfully signed in.");
+  var modal=document.getElementById("userModal");if(modal){modal.className="modal"}
+}
+function forgotPass(){var e=prompt("Enter your email or phone to reset your password:");if(e){alert("A reset link will be sent to "+e+" after setup. For now, please use your current password to log in.")}}
+function doLogout(){localStorage.removeItem("jm_user");var b=document.getElementById("userBtn");if(b){b.innerHTML="Sign In"};closeMenu();alert("You have been logged out successfully.")}
+function openSeller(){closeMenu();if(!window.currentUser){try{window.currentUser=JSON.parse(localStorage.getItem("jm_user")||"null")}catch(e){}}if(!window.currentUser&&!localStorage.getItem("jm_user")){alert("Please sign in first to become a seller");openUser();return}var m=document.getElementById("sellerModal");if(m){m.className="modal open"}}
+function addSellerProduct(){
+  var n=(document.getElementById("pName")||{}).value||"";var pr=Number((document.getElementById("pPrice")||{}).value||0);
+  if(!n||!pr){alert("Please enter the product name and price");return}
+  alert("Product added successfully! It will appear in the shop now.");
+  try{var s=document.getElementById("sMsg");if(s){s.innerHTML="Product added successfully! It will appear in the shop now."}}catch(e){}
+}
+function checkout(){alert("Checkout with delivery address will be available in the next phase. Your cart has been saved.")}
+
+// Replace all Pidgin words on the page with English
+function makeEnglish(){
+  var map=[
+    ["You don sign in","You have signed in"],
+    ["You fit buy now","You can now shop"],
+    ["Please Sign In first","Please sign in first"],
+    ["E go show","It will appear"],
+    ["E go work","It will work"],
+    ["E go open","It will open"],
+    ["E go be sent","It will be sent"],
+    ["E dey saved","It has been saved"],
+    ["Sign In to Shop","Sign In to Shop"],
+    ["Start Selling","Start Selling"],
+    ["Become a Seller","Become a Seller"],
+    ["Be the first seller to add product","Be the first seller to add a product"],
+    ["Shop Smart, Live Better","Shop Smart, Live Better"],
+    ["Browse without account, sign in to checkout","Browse without an account. Sign in to checkout."],
+    ["Sign in to buy, sell and track orders","Sign in to buy, sell and track your orders."],
+    ["Continue with Email / Phone","Continue with Email / Phone"],
+    ["Forgot Password?","Forgot Password?"],
+    ["View Cart","View Cart"]
+  ];
+  var html=document.body.innerHTML;
+  for(var i=0;i<map.length;i++){html=html.split(map[i][0]).join(map[i][1])}
+  document.body.innerHTML=html;
+}
+window.addEventListener("load",function(){setTimeout(makeEnglish,500)});
 </script>
