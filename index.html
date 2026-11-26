@@ -1,171 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JOKER MARKET - Buy & Sell Safely</title>
+<title>joker Shopping - Demo | Not Affiliated With joker</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#f5f5f5;color:#111}
-header{background:#111;color:#fff;padding:15px;display:flex;justify-content:space-between;align-items:center}
-header h1{font-size:28px} header h1 span{color:#facc15}
-button{border:none;padding:12px 16px;border-radius:10px;font-weight:900;cursor:pointer}
-.btn-yellow{background:#facc15}.btn-dark{background:#111;color:#fff}.btn-green{background:#22c55e;color:#fff}.btn-red{background:#ef4444;color:#fff}
-.hero{background:#facc15;padding:25px;text-align:center}
-.hero h2{font-size:32px} .hero p{font-size:18px;margin-top:8px}
-.products{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:15px}
-.card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px #ddd}
-.card img{width:100%;height:150px;object-fit:cover}
-.card div{padding:12px} .card h3{font-size:20px} .card p{font-size:16px;color:#555;margin:6px 0}
-.price{font-size:22px;font-weight:900}
-input,select{width:100%;padding:13px;margin:6px 0;border:1px solid #ccc;border-radius:9px;font-size:16px}
-.box{background:#fff;padding:20px;border-radius:14px;margin:15px}
-.adminBox{background:#111;color:#fff;padding:20px;border-radius:14px;margin:15px}
-.hidden{display:none}
-.sellerRow{background:#222;padding:12px;border-radius:10px;margin:8px 0}
-.sellerRow b{color:#facc15}
-@media(max-width:700px){.products{grid-template-columns:1fr} header h1{font-size:22px}}
-</style>
-</head>
-<body>
-<header><h1>JOKER <span>MARKET</span></h1><button class="btn-yellow" onclick="showSignIn()">Sign In</button></header>
-<div class="hero"><h2>Buy & Sell Safely in Nigeria</h2><p>Escrow Protected - Your Money Safe Until You Receive Your Item</p><button class="btn-dark" onclick="document.getElementById('products').scrollIntoView()">Shop Now</button></div>
-
-<div id="products" class="products">
-<div class="card"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600"><div><h3>iPhone 13 - Neatly Used</h3><p>Lagos • Verified Seller</p><div class="price">₦385,000</div><button class="btn-yellow" style="width:100%;margin-top:8px" onclick="buy('iPhone 13',385000)">Buy Now</button></div></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=600"><div><h3>HP Laptop - 8GB RAM</h3><p>Abuja • Verified Seller</p><div class="price">₦250,000</div><button class="btn-yellow" style="width:100%;margin-top:8px" onclick="buy('HP Laptop',250000)">Buy Now</button></div></div>
-<div class="card"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600"><div><h3>Smart Watch - New</h3><p>Port Harcourt • Verified Seller</p><div class="price">₦45,000</div><button class="btn-yellow" style="width:100%;margin-top:8px" onclick="buy('Smart Watch',45000)">Buy Now</button></div></div>
-</div>
-
-<div id="signInBox" class="box hidden"><h2>Sign In</h2><input id="loginPhone" placeholder="Phone Number - Admin use your OPay number"><input id="loginPass" type="password" placeholder="Password"><button class="btn-dark" style="width:100%" onclick="doLogin()">Sign In</button></div>
-
-<!-- ADMIN DASHBOARD -->
-<div id="adminBox" class="adminBox hidden">
-<h2>🔐 ADMIN DASHBOARD</h2>
-<p>Payment Account: <b id="adminPayDisplay"></b></p>
-<p style="font-size:13px;color:#aaa">To change your OPay, edit ADMIN_OPAY for top of script</p>
-
-<h3 style="margin-top:15px">Create Seller Invite - Only Admin</h3>
-<input id="sellerName" placeholder="Seller Full Name" style="color:#000">
-<input id="sellerPhone" placeholder="Seller Phone Number" style="color:#000">
-<button class="btn-yellow" style="width:100%" onclick="generateSellerLink()">GENERATE SELLER LINK</button>
-<div id="generatedLink" class="hidden" style="background:#222;padding:12px;border-radius:8px;margin-top:10px;word-break:break-all"><b>Copy this link give seller:</b><br><span id="linkText"></span><br><button class="btn-green" style="margin-top:8px" onclick="copyLink()">📋 COPY LINK</button></div>
-
-<h3 style="margin-top:20px">Pending Sellers - BVN / NIN Check</h3>
-<div id="pendingList">No pending seller yet.</div>
-
-<h3 style="margin-top:20px">Approved Sellers</h3>
-<div id="approvedList">No approved seller yet.</div>
-</div>
-
-<!-- SELLER REGISTER -->
-<div id="sellerBox" class="box hidden">
-<h2>Become a Seller - Joker Market</h2><p style="color:red;font-weight:bold">⚠️ You MUST have BVN or NIN. No BVN/NIN = No Selling.</p>
-<input id="regName" placeholder="Full Name">
-<input id="regPhone" placeholder="Phone Number">
-<select id="idType"><option value="">Choose ID Type</option><option value="BVN">BVN</option><option value="NIN">NIN</option></select>
-<input id="idNumber" placeholder="Enter BVN (11 digits) or NIN (11 digits)">
-<label>Upload photo of BVN / NIN slip</label><input id="idPhoto" type="file" accept="image/*">
-<button class="btn-dark" style="width:100%" onclick="submitSeller()">SUBMIT FOR ADMIN APPROVAL</button>
-<p id="sellerError" style="color:red;font-weight:bold;margin-top:8px"></p>
-</div>
-
-<div class="box"><h3>How Joker Market Works</h3><p style="font-size:16px;line-height:1.6;margin-top:8px">1. Buyer pays to Joker Market (Escrow)<br>2. Seller delivers item<br>3. Buyer confirms, Seller gets money<br>Safe for everybody.</p></div>
-
-<script>
-// ============ ⚙️ CHANGE YOUR REAL DETAILS HERE ONLY ============
-// Put your real OPay name + number here, everywhere go change automatically
-const ADMIN_OPAY = {
-  name: "JOKER MARKET", // <-- Change to your real OPay name, e.g. "John Doe"
-  number: "8023456789", // <-- Change to your real OPay number
-  bank: "OPay"
-};
-// Firebase Config - Put your Firebase keys here to use REAL database
-// If you leave am empty, site go use phone storage for now (demo mode)
-const FIREBASE_CONFIG = {
-  apiKey: "", // Paste from Firebase Console
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
-};
-const DB_MODE = (FIREBASE_CONFIG.apiKey !== "") ? "FIREBASE - REAL DATABASE" : "LOCAL - DEMO MODE (Phone storage only)";
-console.log("Joker Market DB Mode:", DB_MODE);
-// ================================================================
-
-document.getElementById('adminPayDisplay').innerText = ADMIN_OPAY.bank + ' - ' + ADMIN_OPAY.number + ' - ' + ADMIN_OPAY.name;
-
-let sellerLinks = JSON.parse(localStorage.getItem('joker_seller_links')||'{}');
-let pending = JSON.parse(localStorage.getItem('joker_pending')||'[]');
-let approved = JSON.parse(localStorage.getItem('joker_approved')||'[]');
-
-function saveAll(){
-  localStorage.setItem('joker_seller_links', JSON.stringify(sellerLinks));
-  localStorage.setItem('joker_pending', JSON.stringify(pending));
-  localStorage.setItem('joker_approved', JSON.stringify(approved));
-  // TODO: If FIREBASE_CONFIG don set, also save to Firebase here
-  // Example: firebase.database().ref('sellers').set({pending, approved})
-  renderSellers();
-}
-function showSignIn(){document.getElementById('signInBox').classList.toggle('hidden');}
-function doLogin(){
-  let ph=document.getElementById('loginPhone').value.trim();
-  if(ph===ADMIN_OPAY.number){document.getElementById('adminBox').classList.remove('hidden');alert('Welcome Admin! Dashboard don open. DB Mode: '+DB_MODE);document.getElementById('adminBox').scrollIntoView();}
-  else{alert('Welcome! You don sign in as buyer.');}
-}
-function buy(name,price){alert('You wan buy '+name+' for ₦'+price.toLocaleString()+'\nPay to '+ADMIN_OPAY.bank+' - '+ADMIN_OPAY.number+' - '+ADMIN_OPAY.name+' (Escrow). Seller go deliver after payment.');}
-function generateSellerLink(){
-  let n=document.getElementById('sellerName').value;let p=document.getElementById('sellerPhone').value;
-  if(!n||!p){alert('Put seller name and phone first');return;}
-  let code='JOKER-'+Math.random().toString(36).substring(2,8).toUpperCase();
-  let link=window.location.origin+window.location.pathname+'?seller='+code;
-  sellerLinks[code]={name:n,phone:p};saveAll();
-  document.getElementById('linkText').innerText=link;document.getElementById('generatedLink').classList.remove('hidden');
-}
-function copyLink(){navigator.clipboard.writeText(document.getElementById('linkText').innerText);alert('Link copied! Send am to seller for WhatsApp');}
-function submitSeller(){
-  let n=document.getElementById('regName').value;let ph=document.getElementById('regPhone').value;let t=document.getElementById('idType').value;let num=document.getElementById('idNumber').value;let err=document.getElementById('sellerError');
-  if(!n||!ph||!t||!num){err.innerText='❌ You MUST fill name + phone + choose BVN or NIN + put number';return;}
-  if(num.length!==11 || !/^\d+$/.test(num)){err.innerText='❌ BVN / NIN must be 11 digits only. Check am well.';return;}
-  // Basic BVN/NIN format check - Real verification needs VerifyMe/Smile Identity API
-  let id = Date.now().toString();
-  pending.push({id:id, name:n, phone:ph, idType:t, idNumber:num, status:'PENDING'});
-  saveAll();
-  err.style.color='green';err.innerText='✅ Submitted! Admin go check your '+t+' and approve you. Wait for approval.';
-}
-function renderSellers(){
-  let pList=document.getElementById('pendingList');
-  if(pending.length===0){pList.innerHTML='No pending seller yet.';}
-  else{
-    pList.innerHTML = pending.map(s=>`<div class="sellerRow"><b>${s.name}</b> - ${s.phone}<br>${s.idType}: ${s.idNumber} - <span style="color:#facc15">${s.status}</span><br><button class="btn-green" onclick="approveSeller('${s.id}')">✅ APPROVE</button> <button class="btn-red" onclick="rejectSeller('${s.id}')">❌ REJECT</button></div>`).join('');
-  }
-  let aList=document.getElementById('approvedList');
-  if(approved.length===0){aList.innerHTML='No approved seller yet.';}
-  else{
-    aList.innerHTML = approved.map(s=>`<div class="sellerRow"><b>${s.name}</b> - ${s.phone}<br>${s.idType}: ${s.idNumber} - <span style="color:#22c55e">APPROVED ✅</span><br><button class="btn-red" onclick="removeSeller('${s.id}')">Remove Seller</button></div>`).join('');
-  }
-}
-function approveSeller(id){
-  let idx=pending.findIndex(s=>s.id===id);if(idx===-1)return;
-  let s=pending.splice(idx,1)[0];s.status='APPROVED';approved.push(s);saveAll();
-  alert('✅ '+s.name+' don approve! E fit sell now. Send am message.');
-}
-function rejectSeller(id){
-  let idx=pending.findIndex(s=>s.id===id);if(idx===-1)return;
-  let s=pending.splice(idx,1)[0];saveAll();
-  alert('❌ '+s.name+' don reject. BVN/NIN no correct or fake.');
-}
-function removeSeller(id){
-  approved=approved.filter(s=>s.id!==id);saveAll();alert('Seller don remove.');
-}
-renderSellers();
-let params=new URLSearchParams(window.location.search);
-if(params.get('seller')){
-  let code=params.get('seller');
-  if(sellerLinks[code]){document.getElementById('sellerBox').classList.remove('hidden');document.getElementById('sellerBox').scrollIntoView();}
-  else{alert('This seller link no valid. Only Admin fit give link.');}
-}
-</script>
-</body>
-</html>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f5f5f5;padding-bottom:70px}
+.top{background:#fb7701;color:#fff;padding:12px 12px 8px;position:sticky;top:0;z-index:10}
+.top small{display:block;text-align:center;font-size:11px;opacity:.9}
+.logo{font-size:26px;font-weight:900;letter-spacing:1px}
+.logo span{color:#fff;background:#000;padding:0 4px;border-radius:4px}
+.search{display:flex;gap:6px;margin-top:10px}
+.search input{flex:1;padding:11px;border:none;border-radius:20px;outline:none}
+.search button{background:#000;color:#fff;border:none;padding:0 16px;border-radius:20px;font-weight:bold}
+.cats{display:flex;gap:8px;overflow-x:auto;padding:10px;background:#fff;white-space:nowrap}
+.cats button{border:1px solid #eee;background:#fff;padding:8px 14px;border-radius:20px;cursor:pointer}
+.cats button.active{background:#fb7701;color:#fff;border-color:#fb7701}
+.banner{background:linear-gradient(90deg,#fb7701,#ff3d00);color:#fff;margin:10px;border-radius:14px;padding:16px}
+.banner h2{font-size:20px}.banner p{font-size:13px;margin:6px 0}
+.banner button{background:#fff;border:none;padding:8px 16px;border-radius:20px;font-weight:bold}
+.section{background:#fff;margin:10px;border-radius:12px;padding:12px}
+.section h3{margin-bottom:10px;display:flex;justify-content:space-between}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card{background:#fff;border:1px solid #eee;border-radius:12px;overflow:hidden;cursor:pointer}
+.card img{width:100%;height:140px;object-fit:cover}
+.card .p{padding:8px}
+.card .t{font-size:13px;height:32px;overflow:hidden}
+.price{color:#fb7701;font-weight:900}.old{color:#999;text-decoration:line-through;font-size:12px}
+.star{color:#ffb400;font-size:12px}
+.btn{width:100%;background:#fb7701;color:#fff;border:none;padding:9px;border-radius:8px;margin-top:6px;font-weight:bold;cursor:pointer}
+.btn2{background:#000}
+.hidden{display:none!important}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:flex-end;justify-content:center;z-index:50}
+.modalBox{background:#fff;width:100%;max-width:480px;max-height:88vh;overflow:auto;border-radius:16px 16px 0 0;padding:16px}
+.modalBox img{width:100%;height:230px;object-fit:cover;border-radius:12px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;margin:6px 0}
+label{font-size:13px;font-weight:bold}
+.row{display:flex;gap:8px}.row>*{flex:1}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;border-top:1px solid #eee;z-index:20}
+.nav button{flex:1;padding:10px 0;border:none;background:#fff;font-size:12px;cursor:pointer}
+.nav button.active{color:#fb7701;font-weight:bold}
+.badge{background:red;color:#fff;border-radius:50%;padding:0 5px;font-size:11px}
+.cartItem{display:flex;gap:10px;border-bottom:1px solid #eee;padding:10px 0}
+.cartItem img{width:70px;height:70px;object-fit:cover;border-radius:10px}
+.track{display:flex;gap:8px;margin:8px 0}.dot{width:22px;height:22px;border-radius:50%;background:#fb7701;color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px}
+.coupon{background:#fff3e0;border:1px dashed #fb7701;padding:10px;border-radius:
